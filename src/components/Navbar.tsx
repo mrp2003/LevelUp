@@ -55,11 +55,11 @@ export function Navbar() {
       {isMobileMenuOpen && (
         <div className="fixed inset-0 z-[60] md:hidden animate-in fade-in duration-300">
           {/* Backdrop */}
-          <div 
+          <div
             className="absolute inset-0 bg-zinc-900/95 backdrop-blur-md animate-in fade-in duration-300"
             onClick={closeMobileMenu}
           />
-          
+
           {/* Menu Content */}
           <div className="relative h-full flex flex-col animate-in slide-in-from-top-4 duration-500 ease-out">
             {/* Menu Header */}
@@ -73,7 +73,7 @@ export function Navbar() {
                   <p className="text-xs text-zinc-400">Fitness Tracker</p>
                 </div>
               </div>
-              
+
               <button
                 onClick={closeMobileMenu}
                 className="p-2 rounded-lg hover:bg-zinc-800 transition-colors"
@@ -87,7 +87,7 @@ export function Navbar() {
               {navItems.map((item, index) => {
                 const Icon = item.icon;
                 const isActive = pathname === item.href;
-                
+
                 return (
                   <Link
                     key={item.href}
@@ -97,11 +97,10 @@ export function Navbar() {
                     style={{ animationDelay: `${200 + index * 100}ms` }}
                   >
                     <Icon className={`h-8 w-8 ${isActive ? "text-orange-400" : "text-zinc-400"}`} />
-                    <span className={`text-lg font-medium ${
-                      isActive 
-                        ? "bg-gradient-to-r from-orange-500 to-pink-600 bg-clip-text text-transparent" 
+                    <span className={`text-lg font-medium ${isActive
+                        ? "bg-gradient-to-r from-orange-500 to-pink-600 bg-clip-text text-transparent"
                         : "text-zinc-400"
-                    }`}>
+                      }`}>
                       {item.label}
                     </span>
                   </Link>

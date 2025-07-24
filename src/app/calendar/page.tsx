@@ -155,10 +155,7 @@ export default function CalendarPage() {
         </div>
       </section>
 
-      {/* Add Workout Button */}
-      <button className="fixed bottom-24 right-4 bg-gradient-to-r from-orange-500/20 to-pink-600/20 border border-orange-500/30 p-4 rounded-full shadow-lg hover:shadow-xl transition-all duration-200">
-        <Plus className="h-6 w-6 text-orange-400" />
-      </button>
+
     </main>
   );
 } 
