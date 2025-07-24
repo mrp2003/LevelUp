@@ -87,7 +87,7 @@ export default function StartWorkoutPage() {
           <span className="text-sm text-zinc-400">{Math.round(((currentExercise + 1) / exercises.length) * 100)}%</span>
         </div>
         <div className="w-full bg-zinc-700 rounded-full h-2">
-          <div 
+          <div
             className="bg-gradient-to-r from-orange-500 to-pink-600 h-2 rounded-full transition-all duration-300"
             style={{ width: `${((currentExercise + 1) / exercises.length) * 100}%` }}
           ></div>
@@ -154,7 +154,7 @@ export default function StartWorkoutPage() {
           >
             <SkipBack className="h-6 w-6 text-white" />
           </button>
-          
+
           <button
             onClick={toggleTimer}
             className="p-4 bg-white rounded-full hover:bg-gray-100 transition-colors"
@@ -165,7 +165,7 @@ export default function StartWorkoutPage() {
               <Play className="h-8 w-8 text-orange-600" />
             )}
           </button>
-          
+
           <button
             onClick={nextExercise}
             disabled={currentExercise === exercises.length - 1}

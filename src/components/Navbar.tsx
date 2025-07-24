@@ -3,13 +3,14 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { Home, Calendar, Play, History, Dumbbell, Menu, X } from "lucide-react";
+import { Home, Calendar, Play, History, User, Dumbbell, Menu, X } from "lucide-react";
 
 const navItems = [
   { href: "/", label: "Dashboard", icon: Home },
   { href: "/calendar", label: "Calendar", icon: Calendar },
   { href: "/start-workout", label: "Workout", icon: Play },
   { href: "/workout-history", label: "History", icon: History },
+  { href: "/profile", label: "Profile", icon: User },
 ];
 
 export function Navbar() {
@@ -98,8 +99,8 @@ export function Navbar() {
                   >
                     <Icon className={`h-8 w-8 ${isActive ? "text-orange-400" : "text-zinc-400"}`} />
                     <span className={`text-lg font-medium ${isActive
-                        ? "bg-gradient-to-r from-orange-500 to-pink-600 bg-clip-text text-transparent"
-                        : "text-zinc-400"
+                      ? "bg-gradient-to-r from-orange-500 to-pink-600 bg-clip-text text-transparent"
+                      : "text-zinc-400"
                       }`}>
                       {item.label}
                     </span>
