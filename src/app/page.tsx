@@ -57,7 +57,7 @@ export default function DashboardPage() {
       <section className="bg-gradient-to-r from-orange-600/20 to-pink-600/20 p-6 rounded-2xl border border-orange-500/30">
         <div className="flex items-center justify-between mb-4">
           <div>
-            <h2 className="text-xl font-bold text-white mb-1">Today's Workout</h2>
+            <h2 className="text-xl font-bold text-white mb-1">Today&apos;s Workout</h2>
             <p className="text-zinc-300">Upper Body Strength</p>
           </div>
           <div className="bg-orange-500/20 p-3 rounded-xl">

@@ -42,7 +42,7 @@ export default function StartWorkoutPage() {
     return () => {
       if (interval) clearInterval(interval);
     };
-  }, [isActive, timeLeft, currentExercise, isResting]);
+  }, [isActive, timeLeft, currentExercise, isResting, exercises]);
 
   const toggleTimer = () => {
     setIsActive(!isActive);

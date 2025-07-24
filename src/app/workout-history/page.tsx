@@ -206,7 +206,7 @@ export default function WorkoutHistoryPage() {
             {/* Notes */}
             {workout.notes && (
               <div className="bg-zinc-700/50 p-3 rounded-xl">
-                <p className="text-zinc-300 text-sm italic">"{workout.notes}"</p>
+                <p className="text-zinc-300 text-sm italic">&ldquo;{workout.notes}&rdquo;</p>
               </div>
             )}
 

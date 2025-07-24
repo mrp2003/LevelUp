@@ -92,7 +92,7 @@ export default function CalendarPage() {
       <section className="bg-gradient-to-r from-orange-600/20 to-pink-600/20 p-6 rounded-2xl border border-orange-500/30">
         <div className="flex items-center justify-between mb-4">
           <div>
-            <h3 className="text-xl font-bold text-white mb-1">Today's Plan</h3>
+            <h3 className="text-xl font-bold text-white mb-1">Today&apos;s Plan</h3>
             <p className="text-zinc-300">January 18, 2025</p>
           </div>
           <div className="bg-orange-500/20 p-2 rounded-lg">
@@ -117,7 +117,7 @@ export default function CalendarPage() {
 
       {/* Weekly Overview */}
       <section className="bg-zinc-800/50 p-6 rounded-2xl border border-zinc-700/50">
-        <h3 className="text-lg font-semibold text-white mb-4">This Week's Progress</h3>
+        <h3 className="text-lg font-semibold text-white mb-4">This Week&apos;s Progress</h3>
 
         <div className="space-y-3">
           <div className="flex items-center justify-between p-3 bg-zinc-700/50 rounded-xl">
