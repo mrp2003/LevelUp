@@ -77,31 +77,31 @@ export default function StartWorkoutPage() {
       {/* Header */}
       <section className="text-center">
         <h1 className="text-3xl font-bold text-white mb-2">Upper Body Strength</h1>
-        <p className="text-slate-400">Exercise {currentExercise + 1} of {exercises.length}</p>
+        <p className="text-zinc-400">Exercise {currentExercise + 1} of {exercises.length}</p>
       </section>
 
       {/* Progress Bar */}
-      <section className="bg-slate-800/50 p-4 rounded-2xl border border-slate-700/50">
+      <section className="bg-zinc-800/50 p-4 rounded-2xl border border-zinc-700/50">
         <div className="flex items-center justify-between mb-2">
-          <span className="text-sm text-slate-400">Progress</span>
-          <span className="text-sm text-slate-400">{Math.round(((currentExercise + 1) / exercises.length) * 100)}%</span>
+          <span className="text-sm text-zinc-400">Progress</span>
+          <span className="text-sm text-zinc-400">{Math.round(((currentExercise + 1) / exercises.length) * 100)}%</span>
         </div>
-        <div className="w-full bg-slate-700 rounded-full h-2">
+        <div className="w-full bg-zinc-700 rounded-full h-2">
           <div 
-            className="bg-gradient-to-r from-indigo-500 to-purple-600 h-2 rounded-full transition-all duration-300"
+            className="bg-gradient-to-r from-orange-500 to-pink-600 h-2 rounded-full transition-all duration-300"
             style={{ width: `${((currentExercise + 1) / exercises.length) * 100}%` }}
           ></div>
         </div>
       </section>
 
       {/* Current Exercise Card */}
-      <section className="bg-gradient-to-r from-indigo-600 to-purple-600 p-8 rounded-2xl text-center">
+      <section className="bg-gradient-to-r from-orange-600/20 to-pink-600/20 border border-orange-500/30 p-8 rounded-2xl text-center">
         <div className="mb-6">
           <h2 className="text-3xl font-bold text-white mb-2">
             {isResting ? 'Rest Time' : currentEx.name}
           </h2>
           {!isResting && (
-            <div className="flex items-center justify-center space-x-4 text-indigo-100">
+            <div className="flex items-center justify-center space-x-4 text-zinc-300">
               <span className="flex items-center space-x-1">
                 <Target className="h-4 w-4" />
                 <span>{currentEx.reps}</span>
@@ -160,9 +160,9 @@ export default function StartWorkoutPage() {
             className="p-4 bg-white rounded-full hover:bg-gray-100 transition-colors"
           >
             {isActive ? (
-              <Pause className="h-8 w-8 text-indigo-600" />
+              <Pause className="h-8 w-8 text-orange-600" />
             ) : (
-              <Play className="h-8 w-8 text-indigo-600" />
+              <Play className="h-8 w-8 text-orange-600" />
             )}
           </button>
           
@@ -178,9 +178,9 @@ export default function StartWorkoutPage() {
 
       {/* Exercise Instructions */}
       {!isResting && (
-        <section className="bg-slate-800/50 p-6 rounded-2xl border border-slate-700/50">
+        <section className="bg-zinc-800/50 p-6 rounded-2xl border border-zinc-700/50">
           <h3 className="text-lg font-semibold text-white mb-3">Instructions</h3>
-          <div className="space-y-2 text-slate-300">
+          <div className="space-y-2 text-zinc-300">
             <p>• Keep your core engaged throughout the movement</p>
             <p>• Focus on controlled, steady movements</p>
             <p>• Breathe steadily - exhale on exertion</p>
@@ -190,16 +190,16 @@ export default function StartWorkoutPage() {
       )}
 
       {/* Next Exercises Preview */}
-      <section className="bg-slate-800/50 p-6 rounded-2xl border border-slate-700/50">
+      <section className="bg-zinc-800/50 p-6 rounded-2xl border border-zinc-700/50">
         <h3 className="text-lg font-semibold text-white mb-4">Coming Up</h3>
         <div className="space-y-3">
           {exercises.slice(currentExercise + 1, currentExercise + 3).map((exercise, index) => (
-            <div key={index} className="flex items-center justify-between p-3 bg-slate-700/50 rounded-xl">
+            <div key={index} className="flex items-center justify-between p-3 bg-zinc-700/50 rounded-xl">
               <div>
                 <p className="text-white font-medium">{exercise.name}</p>
-                <p className="text-slate-400 text-sm">{exercise.reps}</p>
+                <p className="text-zinc-400 text-sm">{exercise.reps}</p>
               </div>
-              <div className="flex items-center space-x-2 text-slate-400 text-sm">
+              <div className="flex items-center space-x-2 text-zinc-400 text-sm">
                 <Clock className="h-4 w-4" />
                 <span>{exercise.duration}s</span>
               </div>
@@ -210,8 +210,8 @@ export default function StartWorkoutPage() {
 
       {/* Complete Workout Button */}
       {currentExercise === exercises.length - 1 && (
-        <button className="w-full bg-gradient-to-r from-green-500 to-emerald-600 text-white font-semibold py-4 rounded-xl hover:from-green-600 hover:to-emerald-700 transition-all duration-200 flex items-center justify-center space-x-2">
-          <CheckCircle className="h-5 w-5" />
+        <button className="w-full bg-gradient-to-r from-green-500/20 to-emerald-600/20 border border-green-500/30 text-white font-semibold py-4 rounded-xl hover:from-green-500/30 hover:to-emerald-600/30 transition-all duration-200 flex items-center justify-center space-x-2">
+          <CheckCircle className="h-5 w-5 text-green-400" />
           <span>Complete Workout</span>
         </button>
       )}

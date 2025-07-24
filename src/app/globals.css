@@ -7,8 +7,8 @@
   
   body {
     font-family: var(--font-geist-sans), system-ui, sans-serif;
-    background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
-    color: #f8fafc;
+    background: linear-gradient(135deg, #18181b 0%, #27272a 50%, #18181b 100%);
+    color: #f4f4f5;
     min-height: 100vh;
   }
 }

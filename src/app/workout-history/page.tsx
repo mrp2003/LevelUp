@@ -64,7 +64,7 @@ export default function WorkoutHistoryPage() {
       case 'High': return 'bg-red-500/20 text-red-400 border-red-500/30';
       case 'Medium': return 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30';
       case 'Low': return 'bg-green-500/20 text-green-400 border-green-500/30';
-      default: return 'bg-slate-500/20 text-slate-400 border-slate-500/30';
+      default: return 'bg-zinc-500/20 text-zinc-400 border-zinc-500/30';
     }
   };
 
@@ -74,7 +74,7 @@ export default function WorkoutHistoryPage() {
       case 'Cardio': return 'bg-red-500/20 text-red-400';
       case 'HIIT': return 'bg-orange-500/20 text-orange-400';
       case 'Flexibility': return 'bg-green-500/20 text-green-400';
-      default: return 'bg-slate-500/20 text-slate-400';
+      default: return 'bg-zinc-500/20 text-zinc-400';
     }
   };
 
@@ -84,23 +84,23 @@ export default function WorkoutHistoryPage() {
       <section>
         <div>
           <h1 className="text-3xl font-bold text-white mb-1">Detailed History</h1>
-          <p className="text-slate-400">Complete workout logs and details</p>
+          <p className="text-zinc-400">Complete workout logs and details</p>
         </div>
       </section>
 
       {/* Filters and Search */}
-      <section className="bg-slate-800/50 p-4 rounded-2xl border border-slate-700/50">
+      <section className="bg-zinc-800/50 p-4 rounded-2xl border border-zinc-700/50">
         <div className="flex items-center space-x-4">
           <div className="flex-1 relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-slate-400" />
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-zinc-400" />
             <input
               type="text"
               placeholder="Search workouts..."
-              className="w-full bg-slate-700 border border-slate-600 rounded-xl pl-10 pr-4 py-2 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full bg-zinc-700 border border-zinc-600 rounded-xl pl-10 pr-4 py-2 text-white placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
           
-          <button className="flex items-center space-x-2 bg-slate-700 hover:bg-slate-600 px-4 py-2 rounded-xl border border-slate-600 text-slate-300 transition-colors">
+          <button className="flex items-center space-x-2 bg-zinc-700 hover:bg-zinc-600 px-4 py-2 rounded-xl border border-zinc-600 text-zinc-300 transition-colors">
             <Filter className="h-4 w-4" />
             <span>Filter</span>
             <ChevronDown className="h-4 w-4" />
@@ -109,44 +109,44 @@ export default function WorkoutHistoryPage() {
       </section>
 
       {/* Monthly Stats */}
-      <section className="grid grid-cols-2 gap-4">
-        <div className="bg-gradient-to-br from-slate-800 to-slate-900 p-4 rounded-2xl border border-slate-700/50">
+      <section className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div className="bg-gradient-to-br from-zinc-800 to-zinc-900 p-4 rounded-2xl border border-zinc-700/50">
           <div className="flex items-center justify-between mb-2">
             <Calendar className="h-5 w-5 text-blue-400" />
           </div>
           <p className="text-2xl font-bold text-white">18</p>
-          <p className="text-sm text-slate-400">This Month</p>
+          <p className="text-sm text-zinc-400">This Month</p>
         </div>
         
-        <div className="bg-gradient-to-br from-slate-800 to-slate-900 p-4 rounded-2xl border border-slate-700/50">
+        <div className="bg-gradient-to-br from-zinc-800 to-zinc-900 p-4 rounded-2xl border border-zinc-700/50">
           <div className="flex items-center justify-between mb-2">
             <Clock className="h-5 w-5 text-green-400" />
           </div>
           <p className="text-2xl font-bold text-white">15.2h</p>
-          <p className="text-sm text-slate-400">Total Time</p>
+          <p className="text-sm text-zinc-400">Total Time</p>
         </div>
         
-        <div className="bg-gradient-to-br from-slate-800 to-slate-900 p-4 rounded-2xl border border-slate-700/50">
+        <div className="bg-gradient-to-br from-zinc-800 to-zinc-900 p-4 rounded-2xl border border-zinc-700/50">
           <div className="flex items-center justify-between mb-2">
             <Flame className="h-5 w-5 text-orange-400" />
           </div>
           <p className="text-2xl font-bold text-white">5,840</p>
-          <p className="text-sm text-slate-400">Calories</p>
+          <p className="text-sm text-zinc-400">Calories</p>
         </div>
         
-        <div className="bg-gradient-to-br from-slate-800 to-slate-900 p-4 rounded-2xl border border-slate-700/50">
+        <div className="bg-gradient-to-br from-zinc-800 to-zinc-900 p-4 rounded-2xl border border-zinc-700/50">
           <div className="flex items-center justify-between mb-2">
             <TrendingUp className="h-5 w-5 text-purple-400" />
           </div>
           <p className="text-2xl font-bold text-white">92%</p>
-          <p className="text-sm text-slate-400">Consistency</p>
+          <p className="text-sm text-zinc-400">Consistency</p>
         </div>
       </section>
 
       {/* Workout List */}
       <section className="space-y-4">
         {workouts.map((workout) => (
-          <div key={workout.id} className="bg-slate-800/50 p-6 rounded-2xl border border-slate-700/50 hover:bg-slate-800/70 transition-colors cursor-pointer">
+          <div key={workout.id} className="bg-zinc-800/50 p-6 rounded-2xl border border-zinc-700/50 hover:bg-zinc-800/70 transition-colors cursor-pointer">
             {/* Header */}
             <div className="flex items-start justify-between mb-4">
               <div className="flex-1">
@@ -159,7 +159,7 @@ export default function WorkoutHistoryPage() {
                     {workout.intensity}
                   </span>
                 </div>
-                <p className="text-slate-400 text-sm">
+                <p className="text-zinc-400 text-sm">
                   {new Date(workout.date).toLocaleDateString('en-US', { 
                     weekday: 'long', 
                     year: 'numeric', 
@@ -178,7 +178,7 @@ export default function WorkoutHistoryPage() {
                 </div>
                 <div>
                   <p className="text-white font-medium">{workout.duration} min</p>
-                  <p className="text-slate-400 text-xs">Duration</p>
+                  <p className="text-zinc-400 text-xs">Duration</p>
                 </div>
               </div>
               
@@ -188,7 +188,7 @@ export default function WorkoutHistoryPage() {
                 </div>
                 <div>
                   <p className="text-white font-medium">{workout.calories} cal</p>
-                  <p className="text-slate-400 text-xs">Burned</p>
+                  <p className="text-zinc-400 text-xs">Burned</p>
                 </div>
               </div>
               
@@ -198,24 +198,24 @@ export default function WorkoutHistoryPage() {
                 </div>
                 <div>
                   <p className="text-white font-medium">{workout.exercises}</p>
-                  <p className="text-slate-400 text-xs">Exercises</p>
+                  <p className="text-zinc-400 text-xs">Exercises</p>
                 </div>
               </div>
             </div>
 
             {/* Notes */}
             {workout.notes && (
-              <div className="bg-slate-700/50 p-3 rounded-xl">
-                <p className="text-slate-300 text-sm italic">"{workout.notes}"</p>
+              <div className="bg-zinc-700/50 p-3 rounded-xl">
+                <p className="text-zinc-300 text-sm italic">"{workout.notes}"</p>
               </div>
             )}
 
             {/* Action Buttons */}
             <div className="flex items-center justify-end space-x-2 mt-4">
-              <button className="text-slate-400 hover:text-white text-sm transition-colors">
+              <button className="text-zinc-400 hover:text-white text-sm transition-colors">
                 View Details
               </button>
-              <button className="text-slate-400 hover:text-white text-sm transition-colors">
+              <button className="text-zinc-400 hover:text-white text-sm transition-colors">
                 Repeat Workout
               </button>
             </div>
@@ -225,7 +225,7 @@ export default function WorkoutHistoryPage() {
 
       {/* Load More */}
       <section className="text-center">
-        <button className="bg-slate-800 hover:bg-slate-700 text-white px-6 py-3 rounded-xl border border-slate-700/50 transition-colors">
+        <button className="bg-zinc-800 hover:bg-zinc-700 text-white px-6 py-3 rounded-xl border border-zinc-700/50 transition-colors">
           Load More Workouts
         </button>
       </section>
