@@ -1,5 +1,14 @@
 @import "tailwindcss";
 
+:root {
+  --theme-primary: #f97316;
+  --theme-secondary: #db2777;
+  --theme-accent: #fb923c;
+  --theme-primary-rgb: 249, 115, 22;
+  --theme-secondary-rgb: 219, 39, 119;
+  --theme-accent-rgb: 251, 146, 60;
+}
+
 @layer base {
   * {
     box-sizing: border-box;
@@ -10,5 +19,27 @@
     background: linear-gradient(135deg, #18181b 0%, #27272a 50%, #18181b 100%);
     color: #f4f4f5;
     min-height: 100vh;
+  }
+}
+
+@layer utilities {
+  .theme-gradient {
+    background: linear-gradient(to right, var(--theme-primary), var(--theme-secondary));
+  }
+  
+  .theme-gradient-transparent {
+    background: linear-gradient(to right, rgba(var(--theme-primary-rgb), 0.2), rgba(var(--theme-secondary-rgb), 0.2));
+  }
+  
+  .theme-border {
+    border-color: rgba(var(--theme-primary-rgb), 0.3);
+  }
+  
+  .theme-text {
+    color: var(--theme-primary);
+  }
+  
+  .theme-focus {
+    --tw-ring-color: var(--theme-primary);
   }
 }

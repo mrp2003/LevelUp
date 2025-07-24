@@ -88,14 +88,14 @@ export default function StartWorkoutPage() {
         </div>
         <div className="w-full bg-zinc-700 rounded-full h-2">
           <div
-            className="bg-gradient-to-r from-orange-500 to-pink-600 h-2 rounded-full transition-all duration-300"
+            className="theme-gradient h-2 rounded-full transition-all duration-300"
             style={{ width: `${((currentExercise + 1) / exercises.length) * 100}%` }}
           ></div>
         </div>
       </section>
 
       {/* Current Exercise Card */}
-      <section className="bg-gradient-to-r from-orange-600/20 to-pink-600/20 border border-orange-500/30 p-8 rounded-2xl text-center">
+      <section className="theme-gradient-transparent border theme-border p-8 rounded-2xl text-center">
         <div className="mb-6">
           <h2 className="text-3xl font-bold text-white mb-2">
             {isResting ? 'Rest Time' : currentEx.name}
@@ -160,9 +160,9 @@ export default function StartWorkoutPage() {
             className="p-4 bg-white rounded-full hover:bg-gray-100 transition-colors"
           >
             {isActive ? (
-              <Pause className="h-8 w-8 text-orange-600" />
+              <Pause className="h-8 w-8 theme-text" />
             ) : (
-              <Play className="h-8 w-8 text-orange-600" />
+              <Play className="h-8 w-8 theme-text" />
             )}
           </button>
 

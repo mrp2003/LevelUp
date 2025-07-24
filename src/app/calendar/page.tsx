@@ -60,7 +60,7 @@ export default function CalendarPage() {
               <div
                 key={date}
                 className={`aspect-square p-1 rounded-xl border transition-all duration-200 cursor-pointer relative ${isToday
-                  ? 'bg-gradient-to-r from-orange-500/20 to-pink-600/20 border-orange-400 text-white'
+                  ? 'theme-gradient-transparent theme-border text-white'
                   : workout
                     ? workout.completed
                       ? 'bg-green-500/20 border-green-500/50 hover:bg-green-500/30'
@@ -89,14 +89,14 @@ export default function CalendarPage() {
       </section>
 
       {/* Today's Schedule */}
-      <section className="bg-gradient-to-r from-orange-600/20 to-pink-600/20 p-6 rounded-2xl border border-orange-500/30">
+      <section className="theme-gradient-transparent p-6 rounded-2xl border theme-border">
         <div className="flex items-center justify-between mb-4">
           <div>
             <h3 className="text-xl font-bold text-white mb-1">Today&apos;s Plan</h3>
             <p className="text-zinc-300">January 18, 2025</p>
           </div>
-          <div className="bg-orange-500/20 p-2 rounded-lg">
-            <Zap className="h-5 w-5 text-orange-400" />
+          <div className="bg-zinc-800/30 p-2 rounded-lg">
+            <Zap className="h-5 w-5 theme-text" />
           </div>
         </div>
 

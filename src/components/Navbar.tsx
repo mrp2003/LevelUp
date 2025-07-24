@@ -3,13 +3,14 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { Home, Calendar, Play, History, User, Dumbbell, Menu, X } from "lucide-react";
+import { Home, Calendar, Play, History, User, Target, Dumbbell, Menu, X } from "lucide-react";
 
 const navItems = [
   { href: "/", label: "Dashboard", icon: Home },
   { href: "/calendar", label: "Calendar", icon: Calendar },
   { href: "/start-workout", label: "Workout", icon: Play },
   { href: "/workout-history", label: "History", icon: History },
+  { href: "/goals", label: "Goals", icon: Target },
   { href: "/profile", label: "Profile", icon: User },
 ];
 
@@ -32,7 +33,7 @@ export function Navbar() {
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3">
-              <div className="p-2 bg-gradient-to-r from-orange-500 to-pink-600 rounded-xl">
+              <div className="p-2 theme-gradient rounded-xl">
                 <Dumbbell className="h-6 w-6 text-white" />
               </div>
               <div>
@@ -66,7 +67,7 @@ export function Navbar() {
             {/* Menu Header */}
             <div className="flex items-center justify-between px-4 py-4 border-b border-zinc-700/50 animate-in slide-in-from-top-2 duration-700 delay-100">
               <div className="flex items-center space-x-3">
-                <div className="p-2 bg-gradient-to-r from-orange-500 to-pink-600 rounded-xl">
+                <div className="p-2 theme-gradient rounded-xl">
                   <Dumbbell className="h-6 w-6 text-white" />
                 </div>
                 <div>
@@ -84,29 +85,31 @@ export function Navbar() {
             </div>
 
             {/* Menu Items */}
-            <div className="flex-1 flex flex-col justify-center items-center px-6 space-y-8">
-              {navItems.map((item, index) => {
-                const Icon = item.icon;
-                const isActive = pathname === item.href;
+            <div className="flex-1 flex items-center justify-center px-6">
+              <div className="grid grid-cols-2 gap-8 max-w-md">
+                {navItems.map((item, index) => {
+                  const Icon = item.icon;
+                  const isActive = pathname === item.href;
 
-                return (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    onClick={closeMobileMenu}
-                    className={`flex flex-col items-center space-y-2 p-4 transition-all duration-200 hover:scale-105 animate-in slide-in-from-bottom-4 duration-500 ease-out`}
-                    style={{ animationDelay: `${200 + index * 100}ms` }}
-                  >
-                    <Icon className={`h-8 w-8 ${isActive ? "text-orange-400" : "text-zinc-400"}`} />
-                    <span className={`text-lg font-medium ${isActive
-                      ? "bg-gradient-to-r from-orange-500 to-pink-600 bg-clip-text text-transparent"
-                      : "text-zinc-400"
-                      }`}>
-                      {item.label}
-                    </span>
-                  </Link>
-                );
-              })}
+                  return (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      onClick={closeMobileMenu}
+                      className={`flex flex-col items-center space-y-3 p-6 transition-all duration-200 hover:scale-105 animate-in slide-in-from-bottom-4 duration-500 ease-out`}
+                      style={{ animationDelay: `${200 + index * 100}ms` }}
+                    >
+                      <Icon className={`h-10 w-10 ${isActive ? "theme-text" : "text-zinc-400"}`} />
+                      <span className={`text-lg font-medium ${isActive
+                        ? "theme-text"
+                        : "text-zinc-400"
+                        }`}>
+                        {item.label}
+                      </span>
+                    </Link>
+                  );
+                })}
+              </div>
             </div>
 
             {/* Menu Footer */}
@@ -131,13 +134,10 @@ export function Navbar() {
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={`flex flex-col items-center py-2 px-3 rounded-xl transition-all duration-200 focus:outline-none ${isActive
-                    ? "bg-gradient-to-r from-orange-500/20 to-pink-600/20 border border-orange-500/30 text-white shadow-lg"
-                    : "text-zinc-400 hover:text-white hover:bg-zinc-800"
-                    }`}
+                  className="flex flex-col items-center py-2 px-3 rounded-xl transition-all duration-200 focus:outline-none hover:bg-zinc-800"
                 >
-                  <Icon className="h-5 w-5" />
-                  <span className="text-xs mt-1 font-medium">{item.label}</span>
+                  <Icon className={`h-5 w-5 ${isActive ? "theme-text" : "text-zinc-400"}`} />
+                  <span className={`text-xs mt-1 font-medium ${isActive ? "theme-text" : "text-zinc-400"}`}>{item.label}</span>
                 </Link>
               );
             })}

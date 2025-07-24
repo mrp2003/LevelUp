@@ -1,10 +1,12 @@
 "use client";
 
 import { useState, useEffect } from 'react';
-import { User, Scale, Ruler, Calendar, TrendingUp } from 'lucide-react';
+import { User, Scale, Ruler, TrendingUp, Settings, Palette } from 'lucide-react';
 import GaugeComponent from 'react-gauge-component';
+import { useTheme, themes } from '@/contexts/ThemeContext';
 
 export default function ProfilePage() {
+  const { currentTheme, setTheme } = useTheme();
   const [name, setName] = useState('');
   const [height, setHeight] = useState('');
   const [weight, setWeight] = useState('');
@@ -72,7 +74,7 @@ export default function ProfilePage() {
       {/* Personal Information Form */}
       <section className="bg-zinc-800/50 p-6 rounded-2xl border border-zinc-700/50">
         <h3 className="text-lg font-semibold text-white mb-6 flex items-center space-x-2">
-          <User className="h-5 w-5 text-orange-400" />
+          <User className="h-5 w-5 theme-text" />
           <span>Personal Information</span>
         </h3>
 
@@ -85,10 +87,10 @@ export default function ProfilePage() {
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="Enter your full name"
-              className="w-full bg-zinc-700 border border-zinc-600 rounded-xl px-4 py-3 text-white placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all"
+              className="w-full bg-zinc-700 border border-zinc-600 rounded-xl px-4 py-3 text-white placeholder-zinc-400 focus:outline-none focus:ring-2 theme-focus focus:border-transparent transition-all"
             />
           </div>
-          
+
           {/* Height and Weight Row */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Height */}
@@ -101,7 +103,7 @@ export default function ProfilePage() {
                   value={height}
                   onChange={(e) => setHeight(e.target.value)}
                   placeholder="Enter your height in cm"
-                  className="w-full bg-zinc-700 border border-zinc-600 rounded-xl pl-12 pr-4 py-3 text-white placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                  className="w-full bg-zinc-700 border border-zinc-600 rounded-xl pl-12 pr-4 py-3 text-white placeholder-zinc-400 focus:outline-none focus:ring-2 theme-focus focus:border-transparent transition-all [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                 />
               </div>
             </div>
@@ -116,7 +118,7 @@ export default function ProfilePage() {
                   value={weight}
                   onChange={(e) => setWeight(e.target.value)}
                   placeholder="Enter your weight in kg"
-                  className="w-full bg-zinc-700 border border-zinc-600 rounded-xl pl-12 pr-4 py-3 text-white placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                  className="w-full bg-zinc-700 border border-zinc-600 rounded-xl pl-12 pr-4 py-3 text-white placeholder-zinc-400 focus:outline-none focus:ring-2 theme-focus focus:border-transparent transition-all [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                 />
               </div>
             </div>
@@ -127,7 +129,7 @@ export default function ProfilePage() {
       {/* BMI Section - Always Present */}
       <section className="bg-zinc-800/50 p-6 rounded-2xl border border-zinc-700/50">
         <h3 className="text-lg font-semibold text-white mb-6 flex items-center space-x-2">
-          <TrendingUp className="h-5 w-5 text-orange-400" />
+          <TrendingUp className="h-5 w-5 theme-text" />
           <span>BMI Analysis</span>
         </h3>
 
@@ -188,10 +190,50 @@ export default function ProfilePage() {
         </div>
       </section>
 
-      {/* Save Button */}
-      <section>
-        <button className="w-full bg-gradient-to-r from-orange-500 to-pink-600 text-white font-semibold py-4 rounded-xl hover:from-orange-600 hover:to-pink-700 transition-all duration-200 shadow-lg">
+      {/* Themes Section */}
+      <section className="bg-zinc-800/50 p-6 rounded-2xl border border-zinc-700/50">
+        <h3 className="text-lg font-semibold text-white mb-6 flex items-center space-x-2">
+          <Palette className="h-5 w-5 theme-text" />
+          <span>Themes</span>
+        </h3>
+
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          {themes.map((theme) => {
+            const isActive = currentTheme.id === theme.id;
+            
+            return (
+              <button
+                key={theme.id}
+                onClick={() => setTheme(theme.id)}
+                className={`p-4 rounded-xl border-2 transition-all duration-200 ${
+                  isActive 
+                    ? 'theme-border theme-gradient-transparent' 
+                    : 'border-zinc-700 hover:border-zinc-600'
+                }`}
+              >
+                <div 
+                  className="w-full h-8 rounded-lg mb-3"
+                  style={{
+                    background: `linear-gradient(to right, ${theme.colors.primary}, ${theme.colors.secondary})`
+                  }}
+                ></div>
+                <p className={`text-sm font-medium ${isActive ? 'text-white' : 'text-zinc-400'}`}>
+                  {theme.name}
+                </p>
+              </button>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* Action Buttons */}
+      <section className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <button className="theme-gradient text-white font-semibold py-4 rounded-xl hover:opacity-90 transition-all duration-200 shadow-lg">
           Save Profile
+        </button>
+        <button className="bg-zinc-700 hover:bg-zinc-600 text-white font-semibold py-4 rounded-xl transition-all duration-200 shadow-lg flex items-center justify-center space-x-2">
+          <Settings className="h-5 w-5" />
+          <span>Admin Settings</span>
         </button>
       </section>
     </main>

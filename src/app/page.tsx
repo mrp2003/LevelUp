@@ -6,8 +6,8 @@ export default function DashboardPage() {
     <main className="container mx-auto px-4 py-6 space-y-6">
       {/* Hero Section */}
       <section className="text-center py-8">
-        <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-orange-500/20 to-pink-600/20 px-4 py-2 rounded-full border border-orange-500/30 mb-4">
-          <Flame className="h-4 w-4 text-orange-400" />
+        <div className="inline-flex items-center space-x-2 theme-gradient-transparent px-4 py-2 rounded-full border theme-border mb-4">
+          <Flame className="h-4 w-4 theme-text" />
           <span className="text-sm text-zinc-300">3 day streak!</span>
         </div>
         <h1 className="text-4xl font-bold text-white mb-2">Ready to Level Up?</h1>
@@ -54,14 +54,14 @@ export default function DashboardPage() {
       </section>
 
       {/* Today's Workout Card */}
-      <section className="bg-gradient-to-r from-orange-600/20 to-pink-600/20 p-6 rounded-2xl border border-orange-500/30">
+      <section className="theme-gradient-transparent p-6 rounded-2xl border theme-border">
         <div className="flex items-center justify-between mb-4">
           <div>
             <h2 className="text-xl font-bold text-white mb-1">Today&apos;s Workout</h2>
             <p className="text-zinc-300">Upper Body Strength</p>
           </div>
-          <div className="bg-orange-500/20 p-3 rounded-xl">
-            <Zap className="h-6 w-6 text-orange-400" />
+          <div className="bg-zinc-800/30 p-3 rounded-xl">
+            <Zap className="h-6 w-6 theme-text" />
           </div>
         </div>
 
@@ -77,7 +77,7 @@ export default function DashboardPage() {
         </div>
 
         <Link href="/start-workout" className="block">
-          <button className="w-full bg-gradient-to-r from-orange-500 to-pink-600 text-white font-semibold py-4 rounded-xl hover:from-orange-600 hover:to-pink-700 transition-all duration-200 flex items-center justify-center space-x-2 shadow-lg">
+          <button className="w-full theme-gradient text-white font-semibold py-4 rounded-xl hover:opacity-90 transition-all duration-200 flex items-center justify-center space-x-2 shadow-lg">
             <Play className="h-5 w-5" />
             <span>Start Workout</span>
           </button>
