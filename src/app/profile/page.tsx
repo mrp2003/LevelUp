@@ -92,7 +92,7 @@ export default function ProfilePage() {
           </div>
 
           {/* Height and Weight Row */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-2 gap-6">
             {/* Height */}
             <div>
               <label className="block text-sm font-medium text-zinc-300 mb-2">Height (cm)</label>
@@ -200,18 +200,17 @@ export default function ProfilePage() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {themes.map((theme) => {
             const isActive = currentTheme.id === theme.id;
-            
+
             return (
               <button
                 key={theme.id}
                 onClick={() => setTheme(theme.id)}
-                className={`p-4 rounded-xl border-2 transition-all duration-200 ${
-                  isActive 
-                    ? 'theme-border theme-gradient-transparent' 
-                    : 'border-zinc-700 hover:border-zinc-600'
-                }`}
+                className={`p-4 rounded-xl border-2 transition-all duration-200 ${isActive
+                  ? 'theme-border theme-gradient-transparent'
+                  : 'border-zinc-700 hover:border-zinc-600'
+                  }`}
               >
-                <div 
+                <div
                   className="w-full h-8 rounded-lg mb-3"
                   style={{
                     background: `linear-gradient(to right, ${theme.colors.primary}, ${theme.colors.secondary})`
