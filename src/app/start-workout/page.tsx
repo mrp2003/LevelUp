@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
-import { Play, Pause, SkipForward, SkipBack, CheckCircle, Clock, Target, Zap, Volume2 } from 'lucide-react';
+import { Play, Pause, SkipForward, SkipBack, CheckCircle, Clock, Target, Zap } from 'lucide-react';
 
 export default function StartWorkoutPage() {
   const [currentExercise, setCurrentExercise] = useState(0);
@@ -216,12 +216,7 @@ export default function StartWorkoutPage() {
         </button>
       )}
 
-      {/* Audio Controls */}
-      <div className="fixed top-24 right-4 bg-slate-800/80 backdrop-blur-md p-3 rounded-xl border border-slate-700/50">
-        <button className="p-2 hover:bg-slate-700 rounded-lg transition-colors">
-          <Volume2 className="h-5 w-5 text-slate-400" />
-        </button>
-      </div>
+
     </main>
   );
 } 

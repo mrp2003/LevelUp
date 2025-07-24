@@ -29,10 +29,7 @@ export function Navbar() {
                 <p className="text-xs text-slate-400">Fitness Tracker</p>
               </div>
             </div>
-            <div className="text-right">
-              <p className="text-sm text-slate-300">Welcome back!</p>
-              <p className="text-xs text-slate-500">Ready to level up?</p>
-            </div>
+
           </div>
         </div>
       </header>

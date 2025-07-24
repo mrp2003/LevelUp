@@ -81,13 +81,10 @@ export default function WorkoutHistoryPage() {
   return (
     <main className="container mx-auto px-4 py-6 space-y-6">
       {/* Header */}
-      <section className="flex items-center justify-between">
+      <section>
         <div>
           <h1 className="text-3xl font-bold text-white mb-1">Detailed History</h1>
           <p className="text-slate-400">Complete workout logs and details</p>
-        </div>
-        <div className="bg-gradient-to-r from-blue-500 to-cyan-600 p-3 rounded-xl">
-          <Calendar className="h-6 w-6 text-white" />
         </div>
       </section>
 
@@ -112,7 +109,7 @@ export default function WorkoutHistoryPage() {
       </section>
 
       {/* Monthly Stats */}
-      <section className="grid grid-cols-4 gap-4">
+      <section className="grid grid-cols-2 gap-4">
         <div className="bg-gradient-to-br from-slate-800 to-slate-900 p-4 rounded-2xl border border-slate-700/50">
           <div className="flex items-center justify-between mb-2">
             <Calendar className="h-5 w-5 text-blue-400" />

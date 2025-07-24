@@ -16,13 +16,10 @@ export default function CalendarPage() {
   return (
     <main className="container mx-auto px-4 py-6 space-y-6">
       {/* Header */}
-      <section className="flex items-center justify-between">
+      <section>
         <div>
           <h1 className="text-3xl font-bold text-white mb-1">Workout Calendar</h1>
           <p className="text-slate-400">Plan and track your fitness journey</p>
-        </div>
-        <div className="bg-gradient-to-r from-indigo-500 to-purple-600 p-3 rounded-xl">
-          <CalendarIcon className="h-6 w-6 text-white" />
         </div>
       </section>
 
@@ -62,7 +59,7 @@ export default function CalendarPage() {
             return (
               <div
                 key={date}
-                className={`aspect-square p-1 rounded-xl border transition-all duration-200 cursor-pointer ${
+                className={`aspect-square p-1 rounded-xl border transition-all duration-200 cursor-pointer relative ${
                   isToday
                     ? 'bg-gradient-to-r from-indigo-500 to-purple-600 border-indigo-400 text-white'
                     : workout
@@ -72,19 +69,19 @@ export default function CalendarPage() {
                     : 'border-slate-700/50 hover:bg-slate-700/50'
                 }`}
               >
-                <div className="h-full flex flex-col items-center justify-center">
+                {workout && (
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    {workout.completed ? (
+                      <CheckCircle className="h-8 w-8 text-green-400/10" />
+                    ) : (
+                      <Clock className="h-8 w-8 text-blue-400/10" />
+                    )}
+                  </div>
+                )}
+                <div className="h-full flex flex-col items-center justify-center relative z-10">
                   <span className={`text-sm font-medium ${isToday ? 'text-white' : 'text-slate-300'}`}>
                     {date}
                   </span>
-                  {workout && (
-                    <div className="mt-1">
-                      {workout.completed ? (
-                        <CheckCircle className="h-3 w-3 text-green-400" />
-                      ) : (
-                        <Clock className="h-3 w-3 text-blue-400" />
-                      )}
-                    </div>
-                  )}
                 </div>
               </div>
             );
