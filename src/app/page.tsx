@@ -1,4 +1,3 @@
-import React from 'react';
 import Link from 'next/link';
 import { Play, TrendingUp, Calendar, Target, Flame, Award, Clock, Zap } from 'lucide-react';
 
@@ -99,7 +98,7 @@ export default function DashboardPage() {
           </div>
         </Link>
         
-        <Link href="/history" className="bg-slate-800 hover:bg-slate-700 p-4 rounded-2xl border border-slate-700/50 transition-all duration-200">
+        <Link href="/workout-history" className="bg-slate-800 hover:bg-slate-700 p-4 rounded-2xl border border-slate-700/50 transition-all duration-200">
           <div className="flex items-center space-x-3">
             <div className="bg-green-500/20 p-2 rounded-lg">
               <TrendingUp className="h-5 w-5 text-green-400" />

@@ -1,4 +1,3 @@
-import React from 'react';
 import { ChevronLeft, ChevronRight, Plus, Calendar as CalendarIcon, CheckCircle, Clock, Zap } from 'lucide-react';
 
 export default function CalendarPage() {

@@ -1,4 +1,3 @@
-import React from 'react';
 import { Calendar, Clock, Flame, TrendingUp, Filter, Search, ChevronDown } from 'lucide-react';
 
 export default function WorkoutHistoryPage() {
@@ -60,7 +59,7 @@ export default function WorkoutHistoryPage() {
     }
   ];
 
-  const getIntensityColor = (intensity) => {
+  const getIntensityColor = (intensity: string) => {
     switch (intensity) {
       case 'High': return 'bg-red-500/20 text-red-400 border-red-500/30';
       case 'Medium': return 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30';
@@ -69,7 +68,7 @@ export default function WorkoutHistoryPage() {
     }
   };
 
-  const getTypeColor = (type) => {
+  const getTypeColor = (type: string) => {
     switch (type) {
       case 'Strength': return 'bg-blue-500/20 text-blue-400';
       case 'Cardio': return 'bg-red-500/20 text-red-400';

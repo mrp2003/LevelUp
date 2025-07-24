@@ -21,7 +21,7 @@ export default function StartWorkoutPage() {
   const currentEx = exercises[currentExercise];
 
   useEffect(() => {
-    let interval = null;
+    let interval: NodeJS.Timeout | null = null;
     if (isActive && timeLeft > 0) {
       interval = setInterval(() => {
         setTimeLeft(timeLeft - 1);
@@ -39,7 +39,9 @@ export default function StartWorkoutPage() {
         }
       }
     }
-    return () => clearInterval(interval);
+    return () => {
+      if (interval) clearInterval(interval);
+    };
   }, [isActive, timeLeft, currentExercise, isResting]);
 
   const toggleTimer = () => {
@@ -64,7 +66,7 @@ export default function StartWorkoutPage() {
     }
   };
 
-  const formatTime = (seconds) => {
+  const formatTime = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
     const secs = seconds % 60;
     return `${mins}:${secs.toString().padStart(2, '0')}`;

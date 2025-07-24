@@ -8,7 +8,7 @@ const navItems = [
   { href: "/", label: "Dashboard", icon: Home },
   { href: "/calendar", label: "Calendar", icon: Calendar },
   { href: "/start-workout", label: "Workout", icon: Play },
-  { href: "/history", label: "History", icon: History },
+  { href: "/workout-history", label: "History", icon: History },
 ];
 
 export function Navbar() {
