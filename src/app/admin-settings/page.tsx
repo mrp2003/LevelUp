@@ -186,7 +186,7 @@ export default function AdminSettingsPage() {
             return (
               <button
                 key={tab.id}
-                onClick={() => setActiveTab(tab.id as any)}
+                onClick={() => setActiveTab(tab.id as 'machines' | 'exercises' | 'workouts')}
                 className={`flex-1 flex items-center justify-center space-x-2 py-3 px-4 rounded-xl transition-all duration-200 ${
                   activeTab === tab.id
                     ? 'theme-gradient text-white shadow-lg'
