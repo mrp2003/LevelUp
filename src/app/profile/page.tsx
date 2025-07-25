@@ -1,8 +1,7 @@
 "use client";
 
 import { useState, useEffect } from 'react';
-import Link from 'next/link';
-import { User, Scale, Ruler, TrendingUp, Settings, Palette } from 'lucide-react';
+import { User, Scale, Ruler, TrendingUp, Palette } from 'lucide-react';
 import GaugeComponent from 'react-gauge-component';
 import { useTheme, themes } from '@/contexts/ThemeContext';
 
@@ -224,16 +223,10 @@ export default function ProfilePage() {
       </section>
 
       {/* Action Buttons */}
-      <section className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <button className="theme-gradient text-white font-semibold py-4 rounded-xl hover:opacity-90 transition-all duration-200 shadow-lg">
+      <section>
+        <button className="w-full theme-gradient text-white font-semibold py-4 rounded-xl hover:opacity-90 transition-all duration-200 shadow-lg">
           Save Profile
         </button>
-        <Link href="/admin-settings" className="block">
-          <button className="w-full bg-zinc-700 hover:bg-zinc-600 text-white font-semibold py-4 rounded-xl transition-all duration-200 shadow-lg flex items-center justify-center space-x-2">
-            <Settings className="h-5 w-5" />
-            <span>Admin Settings</span>
-          </button>
-        </Link>
       </section>
     </main>
   );
