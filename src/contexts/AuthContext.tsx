@@ -17,7 +17,7 @@ interface AuthContextType {
   isLoading: boolean;
   isAuthenticated: boolean;
   login: (username: string, password: string) => Promise<boolean>;
-  register: (name: string, username: string, password: string) => Promise<boolean>;
+  register: (name: string, username: string, email: string, password: string) => Promise<boolean>;
   logout: () => Promise<void>;
 }
 
@@ -100,19 +100,32 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const login = async (username: string, password: string): Promise<boolean> => {
     try {
-      // Convert username to email format for Supabase auth
-      const email = `${username}@levelup.local`;
+      // First, find the user by username to get their email
+      const { data: userProfile, error: userError } = await supabase
+        .from('users')
+        .select('email, id')
+        .eq('username', username)
+        .single();
 
+      if (userError || !userProfile) {
+        console.error('User not found:', userError);
+        return false;
+      }
+
+      // Sign in with the user's email and password
       const { data, error } = await supabase.auth.signInWithPassword({
-        email: email,
+        email: userProfile.email,
         password: password
       });
 
-      if (error) throw error;
+      if (error) {
+        console.error('Login error:', error);
+        return false;
+      }
 
       if (data.user) {
-        // Fetch user profile from our custom users table
-        const { data: userProfile, error: profileError } = await supabase
+        // Fetch full user profile from our custom users table
+        const { data: fullProfile, error: profileError } = await supabase
           .from('users')
           .select('*')
           .eq('id', data.user.id)
@@ -124,11 +137,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         }
 
         const userData = {
-          id: userProfile.id,
-          name: userProfile.name,
-          username: userProfile.username,
-          email: userProfile.email,
-          createdAt: userProfile.created_at
+          id: fullProfile.id,
+          name: fullProfile.name,
+          username: fullProfile.username,
+          email: fullProfile.email,
+          createdAt: fullProfile.created_at
         };
 
         setUser(userData);
@@ -143,11 +156,33 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
 
-  const register = async (name: string, username: string, password: string): Promise<boolean> => {
+  const register = async (name: string, username: string, email: string, password: string): Promise<boolean> => {
     try {
-      // First, sign up with Supabase Auth using username as email (temporary approach)
-      const email = `${username}@levelup.local`; // Create a pseudo-email from username
+      // First, check if username is already taken
+      const { data: existingUser, error: checkError } = await supabase
+        .from('users')
+        .select('username')
+        .eq('username', username)
+        .single();
 
+      if (existingUser) {
+        console.error('Username already taken');
+        return false;
+      }
+
+      // Check if email is already taken
+      const { data: existingEmail, error: emailCheckError } = await supabase
+        .from('users')
+        .select('email')
+        .eq('email', email)
+        .single();
+
+      if (existingEmail) {
+        console.error('Email already taken');
+        return false;
+      }
+
+      // Sign up with Supabase Auth using the real email
       const { data, error } = await supabase.auth.signUp({
         email: email,
         password: password,
@@ -159,36 +194,51 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         }
       });
 
-      if (error) throw error;
+      if (error) {
+        console.error('Supabase auth signup error:', error);
+        return false;
+      }
 
       if (data.user) {
-        // Insert user profile into our custom users table
-        const { error: profileError } = await supabase
-          .from('users')
-          .insert([
-            {
-              id: data.user.id,
-              name: name,
-              username: username,
-              email: email,
-              password_hash: 'handled_by_supabase_auth' // Placeholder since Supabase handles this
-            }
-          ]);
+        try {
+          // Insert user profile into our custom users table
+          const { error: profileError } = await supabase
+            .from('users')
+            .insert([
+              {
+                id: data.user.id,
+                name: name,
+                username: username,
+                email: email,
+                password_hash: 'handled_by_supabase_auth'
+              }
+            ]);
 
-        if (profileError) {
-          console.error('Error creating user profile:', profileError);
-          // Don't fail registration if profile creation fails
+          if (profileError) {
+            console.error('Error creating user profile:', profileError);
+            console.error('Profile error details:', JSON.stringify(profileError, null, 2));
+            // For now, continue with registration even if custom table fails
+          }
+
+          // Create user profile record for extended data
+          const { error: userProfileError } = await supabase
+            .from('user_profiles')
+            .insert([
+              {
+                user_id: data.user.id,
+                theme: 'dawn'
+              }
+            ]);
+
+          if (userProfileError) {
+            console.error('Error creating user profile record:', userProfileError);
+            console.error('User profile error details:', JSON.stringify(userProfileError, null, 2));
+            // Don't fail registration if this fails
+          }
+        } catch (dbError) {
+          console.error('Database error during registration:', dbError);
+          // Continue with registration using Supabase auth data only
         }
-
-        // Create user profile record
-        await supabase
-          .from('user_profiles')
-          .insert([
-            {
-              user_id: data.user.id,
-              theme: 'dawn'
-            }
-          ]);
 
         const userData = {
           id: data.user.id,

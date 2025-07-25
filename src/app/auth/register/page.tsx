@@ -12,6 +12,7 @@ export default function RegisterPage() {
   const [formData, setFormData] = useState({
     name: '',
     username: '',
+    email: '',
     password: '',
     confirmPassword: ''
   });
@@ -54,6 +55,16 @@ export default function RegisterPage() {
       setError('Username is already taken');
       return false;
     }
+    if (!formData.email.trim()) {
+      setError('Please enter your email address');
+      return false;
+    }
+    // Basic email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
+      setError('Please enter a valid email address');
+      return false;
+    }
     if (formData.password.length < 6) {
       setError('Password must be at least 6 characters long');
       return false;
@@ -74,7 +85,7 @@ export default function RegisterPage() {
     setIsLoading(true);
 
     try {
-      const success = await register(formData.name, formData.username, formData.password);
+      const success = await register(formData.name, formData.username, formData.email, formData.password);
       if (success) {
         router.push('/');
       } else {
@@ -160,6 +171,21 @@ export default function RegisterPage() {
                   {usernameAvailable ? 'Username is available' : 'Username is already taken'}
                 </p>
               )}
+            </div>
+
+            {/* Email */}
+            <div>
+              <label className="block text-sm font-medium text-zinc-300 mb-2">
+                Email Address
+              </label>
+              <input
+                type="email"
+                value={formData.email}
+                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                className="w-full bg-zinc-700 border border-zinc-600 rounded-xl px-4 py-3 text-white placeholder-zinc-400 focus:outline-none focus:ring-2 theme-focus focus:border-transparent transition-all"
+                placeholder="Enter your email address"
+                required
+              />
             </div>
 
             {/* Password */}
