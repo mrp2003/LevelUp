@@ -109,6 +109,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
       if (userError || !userProfile) {
         console.error('User not found:', userError);
+        console.error('Searching for username:', username);
+        console.error('Error details:', JSON.stringify(userError, null, 2));
         return false;
       }
 
