@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from 'react';
+import Link from 'next/link';
 import { User, Scale, Ruler, TrendingUp, Settings, Palette } from 'lucide-react';
 import GaugeComponent from 'react-gauge-component';
 import { useTheme, themes } from '@/contexts/ThemeContext';
@@ -202,24 +203,21 @@ export default function ProfilePage() {
             const isActive = currentTheme.id === theme.id;
 
             return (
-              <button
-                key={theme.id}
-                onClick={() => setTheme(theme.id)}
-                className={`p-4 rounded-xl border-2 transition-all duration-200 ${isActive
-                  ? 'theme-border theme-gradient-transparent'
-                  : 'border-zinc-700 hover:border-zinc-600'
-                  }`}
-              >
-                <div
-                  className="w-full h-8 rounded-lg mb-3"
+              <div key={theme.id} className="flex flex-col items-center space-y-2">
+                <button
+                  onClick={() => setTheme(theme.id)}
+                  className={`w-full h-12 rounded-xl border-2 transition-all duration-200 ${isActive
+                    ? 'theme-border'
+                    : 'border-zinc-700 hover:border-zinc-600'
+                    }`}
                   style={{
                     background: `linear-gradient(to right, ${theme.colors.primary}, ${theme.colors.secondary})`
                   }}
-                ></div>
-                <p className={`text-sm font-medium ${isActive ? 'text-white' : 'text-zinc-400'}`}>
+                ></button>
+                <p className={`text-sm font-medium ${isActive ? 'theme-text' : 'text-zinc-400'}`}>
                   {theme.name}
                 </p>
-              </button>
+              </div>
             );
           })}
         </div>
@@ -230,10 +228,12 @@ export default function ProfilePage() {
         <button className="theme-gradient text-white font-semibold py-4 rounded-xl hover:opacity-90 transition-all duration-200 shadow-lg">
           Save Profile
         </button>
-        <button className="bg-zinc-700 hover:bg-zinc-600 text-white font-semibold py-4 rounded-xl transition-all duration-200 shadow-lg flex items-center justify-center space-x-2">
-          <Settings className="h-5 w-5" />
-          <span>Admin Settings</span>
-        </button>
+        <Link href="/admin-settings" className="block">
+          <button className="w-full bg-zinc-700 hover:bg-zinc-600 text-white font-semibold py-4 rounded-xl transition-all duration-200 shadow-lg flex items-center justify-center space-x-2">
+            <Settings className="h-5 w-5" />
+            <span>Admin Settings</span>
+          </button>
+        </Link>
       </section>
     </main>
   );

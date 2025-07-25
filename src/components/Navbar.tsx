@@ -3,7 +3,8 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { Home, Calendar, Play, History, User, Target, Dumbbell, Menu, X } from "lucide-react";
+import { Home, Calendar, Play, History, User, Target, Dumbbell, Menu, X, LogOut } from "lucide-react";
+import { useAuth } from "@/contexts/AuthContext";
 
 const navItems = [
   { href: "/", label: "Dashboard", icon: Home },
@@ -16,6 +17,7 @@ const navItems = [
 
 export function Navbar() {
   const pathname = usePathname();
+  const { user, logout } = useAuth();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const toggleMobileMenu = () => {
@@ -42,13 +44,27 @@ export function Navbar() {
               </div>
             </div>
 
-            {/* Mobile Hamburger Menu Button */}
-            <button
-              onClick={toggleMobileMenu}
-              className="md:hidden p-2 rounded-lg hover:bg-zinc-800 transition-colors"
-            >
-              <Menu className="h-6 w-6 text-zinc-400" />
-            </button>
+            <div className="flex items-center space-x-3">
+              {/* Desktop User Menu */}
+              <div className="hidden md:flex items-center space-x-3">
+                <span className="text-sm text-zinc-400">Welcome, {user?.name}</span>
+                <button
+                  onClick={() => logout()}
+                  className="p-2 rounded-lg hover:bg-zinc-800 transition-colors text-zinc-400 hover:text-white"
+                  title="Logout"
+                >
+                  <LogOut className="h-5 w-5" />
+                </button>
+              </div>
+
+              {/* Mobile Hamburger Menu Button */}
+              <button
+                onClick={toggleMobileMenu}
+                className="md:hidden p-2 rounded-lg hover:bg-zinc-800 transition-colors"
+              >
+                <Menu className="h-6 w-6 text-zinc-400" />
+              </button>
+            </div>
           </div>
         </div>
       </header>
@@ -113,8 +129,21 @@ export function Navbar() {
             </div>
 
             {/* Menu Footer */}
-            <div className="p-6 border-t border-zinc-700/50 animate-in slide-in-from-bottom-2 duration-700 delay-300">
-              <p className="text-center text-zinc-500 text-sm">
+            <div className="p-6 border-t border-zinc-700/50 animate-in slide-in-from-bottom-2 duration-700 delay-300 space-y-4">
+              <div className="flex items-center justify-center space-x-3">
+                <span className="text-zinc-400 text-sm">Welcome, {user?.name}</span>
+                <button
+                  onClick={() => {
+                    closeMobileMenu();
+                    logout();
+                  }}
+                  className="flex items-center space-x-2 bg-zinc-800 hover:bg-zinc-700 px-4 py-2 rounded-lg transition-colors text-zinc-300 hover:text-white"
+                >
+                  <LogOut className="h-4 w-4" />
+                  <span className="text-sm">Logout</span>
+                </button>
+              </div>
+              <p className="text-center text-zinc-500 text-xs">
                 Ready to level up your fitness journey?
               </p>
             </div>
