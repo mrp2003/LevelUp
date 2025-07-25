@@ -122,7 +122,7 @@ export default function LoginPage() {
           {/* Register Link */}
           <div className="mt-6 text-center">
             <p className="text-zinc-400">
-              Don't have an account?{' '}
+              Don&apos;t have an account?{' '}
               <Link href="/auth/register" className="theme-text hover:underline font-medium">
                 Sign up here
               </Link>
