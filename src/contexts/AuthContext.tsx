@@ -2,7 +2,7 @@
 
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { supabase } from '@/lib/supabase'
+import { supabase } from '@/lib/supabase';
 
 interface User {
   id: string;
@@ -12,12 +12,17 @@ interface User {
   createdAt: string;
 }
 
+interface AuthResult {
+  success: boolean;
+  error?: string;
+}
+
 interface AuthContextType {
   user: User | null;
   isLoading: boolean;
   isAuthenticated: boolean;
-  login: (username: string, password: string) => Promise<boolean>;
-  register: (name: string, username: string, email: string, password: string) => Promise<boolean>;
+  login: (username: string, password: string) => Promise<AuthResult>;
+  register: (name: string, username: string, email: string, password: string) => Promise<AuthResult>;
   logout: () => Promise<void>;
 }
 
@@ -38,14 +43,28 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       async (event, session) => {
         if (event === 'SIGNED_IN' && session?.user) {
-          // Fetch user profile when signed in
-          const { data: userProfile } = await supabase
+          // Try to fetch user profile when signed in
+          const { data: userProfile, error } = await supabase
             .from('users')
             .select('*')
             .eq('id', session.user.id)
             .single();
 
-          if (userProfile) {
+          if (error) {
+            console.error('Error fetching user profile on auth change:', error);
+
+            // If user profile doesn't exist in our custom table, create a fallback user object
+            if (error.code === 'PGRST116') {
+              console.log('User profile not found in custom table, using Supabase auth data');
+              setUser({
+                id: session.user.id,
+                name: session.user.user_metadata?.name || 'User',
+                username: session.user.user_metadata?.username || session.user.email?.split('@')[0] || 'user',
+                email: session.user.email || '',
+                createdAt: session.user.created_at || new Date().toISOString()
+              });
+            }
+          } else if (userProfile) {
             setUser({
               id: userProfile.id,
               name: userProfile.name,
@@ -69,7 +88,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       const { data: { session } } = await supabase.auth.getSession();
 
       if (session?.user) {
-        // Fetch user profile from your users table
+        // Try to fetch user profile from your users table
         const { data: userProfile, error } = await supabase
           .from('users')
           .select('*')
@@ -78,6 +97,18 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
         if (error) {
           console.error('Error fetching user profile:', error);
+
+          // If user profile doesn't exist in our custom table, create a fallback user object
+          if (error.code === 'PGRST116') {
+            console.log('User profile not found in custom table, using Supabase auth data');
+            setUser({
+              id: session.user.id,
+              name: session.user.user_metadata?.name || 'User',
+              username: session.user.user_metadata?.username || session.user.email?.split('@')[0] || 'user',
+              email: session.user.email || '',
+              createdAt: session.user.created_at || new Date().toISOString()
+            });
+          }
           return;
         }
 
@@ -98,7 +129,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
-  const login = async (username: string, password: string): Promise<boolean> => {
+  const login = async (username: string, password: string): Promise<AuthResult> => {
     try {
       // First, find the user by username to get their email
       const { data: userProfile, error: userError } = await supabase
@@ -108,10 +139,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         .single();
 
       if (userError || !userProfile) {
-        console.error('User not found:', userError);
-        console.error('Searching for username:', username);
-        console.error('Error details:', JSON.stringify(userError, null, 2));
-        return false;
+        if (userError?.code === 'PGRST116') {
+          return { success: false, error: 'Username not found. Please check your username or sign up for a new account.' };
+        }
+        return { success: false, error: 'Unable to find user account. Please try again.' };
       }
 
       // Sign in with the user's email and password
@@ -121,8 +152,16 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       });
 
       if (error) {
-        console.error('Login error:', error);
-        return false;
+        if (error.message.includes('Invalid login credentials')) {
+          return { success: false, error: 'Invalid password. Please check your password and try again.' };
+        }
+        if (error.message.includes('Email not confirmed')) {
+          return { success: false, error: 'Please verify your email address before signing in.' };
+        }
+        if (error.message.includes('Too many requests')) {
+          return { success: false, error: 'Too many login attempts. Please wait a moment and try again.' };
+        }
+        return { success: false, error: error.message || 'Login failed. Please try again.' };
       }
 
       if (data.user) {
@@ -134,8 +173,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           .single();
 
         if (profileError) {
-          console.error('Error fetching user profile:', profileError);
-          return false;
+          return { success: false, error: 'Unable to load user profile. Please try again.' };
         }
 
         const userData = {
@@ -147,41 +185,43 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         };
 
         setUser(userData);
-        return true;
+        return { success: true };
       }
 
-      return false;
+      return { success: false, error: 'Login failed. Please try again.' };
     } catch (error) {
-      console.error('Login error:', error);
-      return false;
+      return { success: false, error: 'Network error. Please check your connection and try again.' };
     }
   };
 
 
-  const register = async (name: string, username: string, email: string, password: string): Promise<boolean> => {
+  const register = async (name: string, username: string, email: string, password: string): Promise<AuthResult> => {
     try {
-      // First, check if username is already taken
-      const { data: existingUser, error: checkError } = await supabase
-        .from('users')
-        .select('username')
-        .eq('username', username)
-        .single();
+      // Try to check if username is already taken (skip if table doesn't exist)
+      try {
+        const { data: existingUser, error: checkError } = await supabase
+          .from('users')
+          .select('username')
+          .eq('username', username)
+          .single();
 
-      if (existingUser) {
-        console.error('Username already taken');
-        return false;
-      }
+        if (existingUser) {
+          return { success: false, error: 'Username is already taken. Please choose a different username.' };
+        }
 
-      // Check if email is already taken
-      const { data: existingEmail, error: emailCheckError } = await supabase
-        .from('users')
-        .select('email')
-        .eq('email', email)
-        .single();
+        // Check if email is already taken
+        const { data: existingEmail, error: emailCheckError } = await supabase
+          .from('users')
+          .select('email')
+          .eq('email', email)
+          .single();
 
-      if (existingEmail) {
-        console.error('Email already taken');
-        return false;
+        if (existingEmail) {
+          return { success: false, error: 'Email address is already registered. Please use a different email or try logging in.' };
+        }
+      } catch (tableError) {
+        // If tables don't exist, skip the checks and continue with registration
+        console.log('Custom tables not available, skipping duplicate checks');
       }
 
       // Sign up with Supabase Auth using the real email
@@ -197,11 +237,23 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       });
 
       if (error) {
-        console.error('Supabase auth signup error:', error);
-        return false;
+        if (error.message.includes('Password should be at least')) {
+          return { success: false, error: 'Password must be at least 6 characters long.' };
+        }
+        if (error.message.includes('Invalid email')) {
+          return { success: false, error: 'Please enter a valid email address.' };
+        }
+        if (error.message.includes('User already registered')) {
+          return { success: false, error: 'This email is already registered. Please try logging in instead.' };
+        }
+        if (error.message.includes('Signup is disabled')) {
+          return { success: false, error: 'Account registration is currently disabled. Please contact support.' };
+        }
+        return { success: false, error: error.message || 'Registration failed. Please try again.' };
       }
 
       if (data.user) {
+        // Always create user profile records, regardless of email verification status
         try {
           // Insert user profile into our custom users table
           const { error: profileError } = await supabase
@@ -218,8 +270,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
           if (profileError) {
             console.error('Error creating user profile:', profileError);
-            console.error('Profile error details:', JSON.stringify(profileError, null, 2));
-            // For now, continue with registration even if custom table fails
+
+            // If the table doesn't exist, that's okay - we'll use fallback data
+            if (profileError.code === '42P01' || profileError.message.includes('relation "public.users" does not exist')) {
+              console.log('Custom users table does not exist, continuing with Supabase auth only');
+            } else {
+              // For other errors, log but continue - don't fail registration
+              console.log('User profile creation failed, but continuing with registration');
+            }
           }
 
           // Create user profile record for extended data
@@ -234,14 +292,24 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
           if (userProfileError) {
             console.error('Error creating user profile record:', userProfileError);
-            console.error('User profile error details:', JSON.stringify(userProfileError, null, 2));
-            // Don't fail registration if this fails
+            // This is less critical, so we can continue
           }
         } catch (dbError) {
           console.error('Database error during registration:', dbError);
-          // Continue with registration using Supabase auth data only
+          // Don't fail registration for database issues - the user can still use the app with Supabase auth
+          console.log('Continuing with registration despite database error');
         }
 
+        // Check if email confirmation is required
+        if (data.user && !data.session) {
+          // Don't set user in state yet since they haven't verified email
+          return {
+            success: true,
+            error: 'Registration successful! Please check your email and click the verification link to complete your account setup.'
+          };
+        }
+
+        // If no email verification required, set user and proceed
         const userData = {
           id: data.user.id,
           name: name,
@@ -251,13 +319,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         };
 
         setUser(userData);
-        return true;
+        return { success: true };
       }
 
-      return false;
+      return { success: false, error: 'Registration failed. Please try again.' };
     } catch (error) {
-      console.error('Registration failed:', error);
-      return false;
+      return { success: false, error: 'Network error. Please check your connection and try again.' };
     }
   };
 

@@ -23,14 +23,14 @@ export default function LoginPage() {
     setError('');
 
     try {
-      const success = await login(formData.username, formData.password);
-      if (success) {
+      const result = await login(formData.username, formData.password);
+      if (result.success) {
         router.push('/');
       } else {
-        setError('Invalid username or password');
+        setError(result.error || 'Login failed. Please try again.');
       }
     } catch (err) {
-      setError('Login failed. Please try again.');
+      setError('Network error. Please check your connection and try again.');
     } finally {
       setIsLoading(false);
     }

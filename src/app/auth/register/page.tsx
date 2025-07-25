@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Eye, EyeOff, Dumbbell, UserPlus, Check, X } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
+import { supabase } from '@/lib/supabase';
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -20,6 +21,7 @@ export default function RegisterPage() {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
   const [usernameAvailable, setUsernameAvailable] = useState<boolean | null>(null);
 
   const checkUsernameAvailability = async (username: string) => {
@@ -28,13 +30,29 @@ export default function RegisterPage() {
       return;
     }
 
-    // TODO: Implement actual username check with Supabase
-    // For now, simulate check
-    setTimeout(() => {
-      // Simulate some usernames being taken
-      const takenUsernames = ['admin', 'test', 'user', 'demo'];
-      setUsernameAvailable(!takenUsernames.includes(username.toLowerCase()));
-    }, 500);
+    try {
+      // Check if username exists in Supabase database
+      const { data, error } = await supabase
+        .from('users')
+        .select('username')
+        .eq('username', username.toLowerCase())
+        .single();
+
+      if (error && error.code === 'PGRST116') {
+        // No rows returned - username is available
+        setUsernameAvailable(true);
+      } else if (data) {
+        // Username found - not available
+        setUsernameAvailable(false);
+      } else {
+        // Other error occurred
+        console.error('Username check error:', error);
+        setUsernameAvailable(null);
+      }
+    } catch (error) {
+      console.error('Username availability check failed:', error);
+      setUsernameAvailable(null);
+    }
   };
 
   const handleUsernameChange = (username: string) => {
@@ -79,20 +97,29 @@ export default function RegisterPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
+    setSuccessMessage('');
 
     if (!validateForm()) return;
 
     setIsLoading(true);
 
     try {
-      const success = await register(formData.name, formData.username, formData.email, formData.password);
-      if (success) {
+      const result = await register(formData.name, formData.username, formData.email, formData.password);
+      if (result.success) {
+        // If there's an error message but success is true, it means email verification is required
+        if (result.error) {
+          // Show success message for email verification
+          setSuccessMessage(result.error);
+          setError(''); // Clear any previous errors
+          // Don't redirect immediately, let user see the verification message
+          return;
+        }
         router.push('/');
       } else {
-        setError('Registration failed. Please try again.');
+        setError(result.error || 'Registration failed. Please try again.');
       }
     } catch (err) {
-      setError('Registration failed. Please try again.');
+      setError('Network error. Please check your connection and try again.');
     } finally {
       setIsLoading(false);
     }
@@ -122,6 +149,12 @@ export default function RegisterPage() {
             {error && (
               <div className="bg-red-500/20 border border-red-500/30 text-red-400 px-4 py-3 rounded-xl text-sm">
                 {error}
+              </div>
+            )}
+
+            {successMessage && (
+              <div className="bg-green-500/20 border border-green-500/30 text-green-400 px-4 py-3 rounded-xl text-sm">
+                {successMessage}
               </div>
             )}
 
