@@ -6,6 +6,7 @@ import HumanBody3D from '@/components/HumanBody3D';
 
 export default function MusclesPage() {
   const [selectedMuscleGroup, setSelectedMuscleGroup] = useState<string | null>(null);
+  const [selectedMuscleSelection, setSelectedMuscleSelection] = useState<any>(null);
 
   const allSelections = getAllMuscleSelections();
 
@@ -39,6 +40,10 @@ export default function MusclesPage() {
                     key={group.name}
                     onClick={() => {
                       setSelectedMuscleGroup(selectedMuscleGroup === group.name ? null : group.name);
+                      // Clear individual muscle selection when selecting muscle group
+                      if (selectedMuscleSelection) {
+                        setSelectedMuscleSelection(null);
+                      }
                     }}
                     className={`w-full text-left p-4 rounded-lg transition-all duration-200 border-2 ${selectedMuscleGroup === group.name
                       ? 'bg-zinc-700/50 border-opacity-100'
@@ -71,7 +76,10 @@ export default function MusclesPage() {
             <div className="bg-zinc-800/50 backdrop-blur-sm rounded-xl p-6 border border-zinc-700/50 h-full min-h-[600px]">
               <h2 className="text-xl font-semibold text-white mb-6 text-center">3D Body Model</h2>
               <div className="h-full">
-                <HumanBody3D selectedMuscleGroup={selectedMuscleGroup} />
+                <HumanBody3D
+                  selectedMuscleGroup={selectedMuscleGroup}
+                  selectedMuscleSelection={selectedMuscleSelection}
+                />
               </div>
             </div>
           </div>
@@ -84,34 +92,62 @@ export default function MusclesPage() {
               </h2>
 
               <div className="space-y-3 max-h-[600px] overflow-y-auto">
-                {filteredSelections.map((selection, index) => (
-                  <div
-                    key={index}
-                    className="p-4 rounded-lg bg-zinc-800/30 border border-zinc-700/30 hover:bg-zinc-700/30 transition-all duration-200"
-                  >
-                    <div className="text-white font-medium mb-2 text-sm">
-                      {selection.displayName.split(' > ').pop()}
+                {filteredSelections.map((selection, index) => {
+                  const isSelected = selectedMuscleSelection &&
+                    selectedMuscleSelection.group === selection.group &&
+                    selectedMuscleSelection.muscle === selection.muscle &&
+                    selectedMuscleSelection.subMuscle === selection.subMuscle &&
+                    selectedMuscleSelection.head === selection.head;
+
+                  return (
+                    <div
+                      key={index}
+                      onClick={() => {
+                        // Toggle selection - if already selected, deselect, otherwise select this one
+                        if (isSelected) {
+                          setSelectedMuscleSelection(null);
+                        } else {
+                          setSelectedMuscleSelection(selection);
+                          // Clear muscle group selection when selecting individual muscle
+                          if (selectedMuscleGroup) {
+                            setSelectedMuscleGroup(null);
+                          }
+                        }
+                      }}
+                      className={`p-4 rounded-lg border transition-all duration-200 cursor-pointer ${isSelected
+                        ? 'bg-zinc-700/50 border-zinc-600/80 ring-2 ring-blue-500/30'
+                        : 'bg-zinc-800/30 border-zinc-700/30 hover:bg-zinc-700/30'
+                        }`}
+                    >
+                      <div className="text-white font-medium mb-2 text-sm">
+                        {selection.displayName.split(' > ').pop()}
+                      </div>
+                      <div className="text-xs text-zinc-400 mb-3">
+                        {selection.displayName}
+                      </div>
+                      <div className="flex flex-wrap gap-2">
+                        {selection.tags.map((tag, tagIndex) => (
+                          <span
+                            key={tagIndex}
+                            className="px-2 py-1 rounded-md text-xs font-medium border transition-all duration-200"
+                            style={{
+                              backgroundColor: `${tag.color}15`,
+                              borderColor: `${tag.color}60`,
+                              color: tag.color
+                            }}
+                          >
+                            {tag.name}
+                          </span>
+                        ))}
+                      </div>
+                      {isSelected && (
+                        <div className="mt-2 text-xs text-blue-400 font-medium">
+                          ✓ Selected - View on 3D model
+                        </div>
+                      )}
                     </div>
-                    <div className="text-xs text-zinc-400 mb-3">
-                      {selection.displayName}
-                    </div>
-                    <div className="flex flex-wrap gap-2">
-                      {selection.tags.map((tag, tagIndex) => (
-                        <span
-                          key={tagIndex}
-                          className="px-2 py-1 rounded-md text-xs font-medium border transition-all duration-200"
-                          style={{
-                            backgroundColor: `${tag.color}15`,
-                            borderColor: `${tag.color}60`,
-                            color: tag.color
-                          }}
-                        >
-                          {tag.name}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             </div>
           </div>
