@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { Home, Calendar, Play, History, User, Target, Dumbbell, Menu, X } from "lucide-react";
+import { Home, Calendar, Play, History, User, Target, Dumbbell, Menu, X, Zap } from "lucide-react";
 
 const navItems = [
   { href: "/", label: "Dashboard", icon: Home },
@@ -11,6 +11,7 @@ const navItems = [
   { href: "/start-workout", label: "Workout", icon: Play },
   { href: "/workout-history", label: "History", icon: History },
   { href: "/goals", label: "Goals", icon: Target },
+  { href: "/muscles", label: "Muscles", icon: Zap },
   { href: "/profile", label: "Profile", icon: User },
 ];
 
