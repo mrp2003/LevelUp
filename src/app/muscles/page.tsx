@@ -32,9 +32,9 @@ export default function MusclesPage() {
         <div className="grid lg:grid-cols-3 gap-8">
           {/* Left Panel - Muscle Groups */}
           <div className="lg:col-span-1">
-            <div className="bg-zinc-800/50 backdrop-blur-sm rounded-xl p-8 border border-zinc-700/50">
+            <div className="bg-zinc-800/50 backdrop-blur-sm rounded-xl p-8 border border-zinc-700/50 h-[700px] flex flex-col">
               <h2 className="text-xl font-semibold text-white mb-6">Muscle Groups</h2>
-              <div className="space-y-3">
+              <div className="space-y-3 flex-1 overflow-y-auto">
                 {MUSCLE_GROUPS.map((group) => (
                   <button
                     key={group.name}
@@ -67,15 +67,13 @@ export default function MusclesPage() {
                 ))}
               </div>
             </div>
-
-
           </div>
 
           {/* Center Panel - 3D Body Model */}
           <div className="lg:col-span-1">
-            <div className="bg-zinc-800/50 backdrop-blur-sm rounded-xl p-6 border border-zinc-700/50 h-full min-h-[600px]">
+            <div className="bg-zinc-800/50 backdrop-blur-sm rounded-xl p-6 border border-zinc-700/50 h-[700px] flex flex-col">
               <h2 className="text-xl font-semibold text-white mb-6 text-center">3D Body Model</h2>
-              <div className="h-full">
+              <div className="flex-1 overflow-hidden rounded-lg">
                 <HumanBody3D
                   selectedMuscleGroup={selectedMuscleGroup}
                   selectedMuscleSelection={selectedMuscleSelection}
@@ -86,12 +84,12 @@ export default function MusclesPage() {
 
           {/* Right Panel - Muscle Details */}
           <div className="lg:col-span-1">
-            <div className="bg-zinc-800/50 backdrop-blur-sm rounded-xl p-6 border border-zinc-700/50">
+            <div className="bg-zinc-800/50 backdrop-blur-sm rounded-xl p-6 border border-zinc-700/50 h-[700px] flex flex-col">
               <h2 className="text-xl font-semibold text-white mb-6">
                 {selectedMuscleGroup ? `${selectedMuscleGroup} Muscles` : 'All Muscles'}
               </h2>
 
-              <div className="space-y-3 max-h-[600px] overflow-y-auto">
+              <div className="space-y-3 flex-1 overflow-y-auto">
                 {filteredSelections.map((selection, index) => {
                   const isSelected = selectedMuscleSelection &&
                     selectedMuscleSelection.group === selection.group &&
