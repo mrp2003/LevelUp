@@ -66,8 +66,16 @@ export default function HumanBody3D({ selectedMuscleGroup, selectedMuscleSelecti
     const bodyGroup = new THREE.Group();
     bodyRef.current = bodyGroup;
 
+    interface BodyPart {
+      geometry: THREE.BufferGeometry;
+      position: [number, number, number];
+      color: number;
+      muscleName?: string;
+      muscleHead?: string;
+    }    
+
     // Detailed body parts mapping to actual muscles from muscleGroups.ts
-    const bodyParts = {
+    const bodyParts: Record<string, BodyPart> = {
       // Head (non-muscle)
       head: {
         geometry: new THREE.SphereGeometry(0.3, 16, 16),
@@ -640,9 +648,11 @@ export default function HumanBody3D({ selectedMuscleGroup, selectedMuscleSelecti
       'Soleus': 'Legs'
     };
 
+    type MuscleName = keyof typeof muscleToGroup;
+
     bodyRef.current.children.forEach((child) => {
       if (child instanceof THREE.Mesh && child.material instanceof THREE.MeshLambertMaterial) {
-        const muscleName = child.userData.muscleName;
+        const muscleName = (child as THREE.Mesh).userData.muscleName as MuscleName;
         const muscleHead = child.userData.muscleHead;
         const muscleGroup = muscleToGroup[muscleName];
 
