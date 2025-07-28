@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from 'react';
-import { User, Scale, Ruler, TrendingUp, Palette } from 'lucide-react';
+import { User, Scale, Ruler, TrendingUp, Palette, Dumbbell } from 'lucide-react';
 import GaugeComponent from 'react-gauge-component';
 import { useTheme, themes } from '@/contexts/ThemeContext';
 
@@ -187,6 +187,48 @@ export default function ProfilePage() {
           </div>
 
 
+        </div>
+      </section>
+
+      {/* Muscle Explorer Section */}
+      <section className="bg-zinc-800/50 p-6 rounded-2xl border border-zinc-700/50">
+        <h3 className="text-lg font-semibold text-white mb-6 flex items-center space-x-2">
+          <Dumbbell className="h-5 w-5 theme-text" />
+          <span>Muscle Explorer</span>
+        </h3>
+
+        {/* Desktop Layout */}
+        <div className="hidden md:flex items-center justify-between">
+          <div className="flex-1">
+            <p className="text-zinc-400 text-sm">
+              Explore detailed muscle anatomy through interactive muscle map with our 3D body model. 
+              Learn about muscle groups, individual muscles, and their functions.
+            </p>
+          </div>
+          <div className="ml-6 flex items-center">
+            <a
+              href="/muscles"
+              className="inline-flex items-center px-4 py-2 theme-gradient text-white font-medium rounded-lg hover:opacity-90 transition-all duration-200 shadow-lg"
+            >
+              <Dumbbell className="h-4 w-4 mr-2" />
+              Explore Muscles
+            </a>
+          </div>
+        </div>
+
+        {/* Mobile Layout */}
+        <div className="md:hidden space-y-4">
+          <p className="text-zinc-400 text-sm">
+            Explore detailed muscle anatomy through interactive muscle map with our 3D body model. 
+            Learn about muscle groups, individual muscles, and their functions.
+          </p>
+          <a
+            href="/muscles"
+            className="w-full inline-flex items-center justify-center px-4 py-3 theme-gradient text-white font-medium rounded-lg hover:opacity-90 transition-all duration-200 shadow-lg"
+          >
+            <Dumbbell className="h-4 w-4 mr-2" />
+            Explore Muscles
+          </a>
         </div>
       </section>
 

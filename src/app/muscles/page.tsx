@@ -152,7 +152,7 @@ export default function MusclesPage() {
         </div>
 
         {/* Bottom Stats */}
-        <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="bg-zinc-800/50 backdrop-blur-sm rounded-xl p-6 border border-zinc-700/50 text-center">
             <div className="text-3xl font-bold text-white mb-2">{MUSCLE_GROUPS.length}</div>
             <div className="text-zinc-400">Muscle Groups</div>
