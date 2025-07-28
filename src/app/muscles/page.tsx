@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { MUSCLE_GROUPS, getAllMuscleSelections } from '@/lib/muscleGroups';
+import { MUSCLE_GROUPS, getAllMuscleSelections, ExerciseTag } from '@/lib/muscleGroups';
 import HumanBody3D from '@/components/HumanBody3D';
 
 export default function MusclesPage() {
@@ -12,7 +12,7 @@ export default function MusclesPage() {
     subMuscle?: string;
     head?: string;
     displayName: string;
-    tags: any[];
+    tags: ExerciseTag[];
   } | null>(null);
 
   const allSelections = getAllMuscleSelections();

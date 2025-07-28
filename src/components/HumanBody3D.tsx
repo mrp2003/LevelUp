@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from 'react';
 import * as THREE from 'three';
+import { ExerciseTag } from '@/lib/muscleGroups';
 
 interface HumanBody3DProps {
   selectedMuscleGroup?: string | null;
@@ -11,7 +12,7 @@ interface HumanBody3DProps {
     subMuscle?: string;
     head?: string;
     displayName: string;
-    tags: any[];
+    tags: ExerciseTag[];
   } | null;
 }
 
@@ -25,6 +26,9 @@ export default function HumanBody3D({ selectedMuscleGroup, selectedMuscleSelecti
 
   useEffect(() => {
     if (!mountRef.current) return;
+
+    // Store the current mount reference for cleanup
+    const currentMount = mountRef.current;
 
     // Scene setup
     const scene = new THREE.Scene();
@@ -552,9 +556,9 @@ export default function HumanBody3D({ selectedMuscleGroup, selectedMuscleSelecti
     };
 
     // Add event listeners
-    mountRef.current.addEventListener('mousemove', handleMouseMove);
-    mountRef.current.addEventListener('mousedown', handleMouseDown);
-    mountRef.current.addEventListener('mouseup', handleMouseUp);
+    currentMount.addEventListener('mousemove', handleMouseMove);
+    currentMount.addEventListener('mousedown', handleMouseDown);
+    currentMount.addEventListener('mouseup', handleMouseUp);
 
     // Animation loop
     const animate = () => {
@@ -587,12 +591,14 @@ export default function HumanBody3D({ selectedMuscleGroup, selectedMuscleSelecti
         cancelAnimationFrame(animationIdRef.current);
       }
 
-      const currentMount = mountRef.current;
       if (currentMount && renderer.domElement) {
         currentMount.removeChild(renderer.domElement);
       }
 
       window.removeEventListener('resize', handleResize);
+      currentMount.removeEventListener('mousemove', handleMouseMove);
+      currentMount.removeEventListener('mousedown', handleMouseDown);
+      currentMount.removeEventListener('mouseup', handleMouseUp);
       renderer.dispose();
     };
   }, []);
