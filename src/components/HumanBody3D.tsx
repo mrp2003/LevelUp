@@ -71,28 +71,28 @@ export default function HumanBody3D({ selectedMuscleGroup, selectedMuscleSelecti
       // Head (non-muscle)
       head: {
         geometry: new THREE.SphereGeometry(0.3, 16, 16),
-        position: [0, 1.7, 0],
+        position: [0, 1.7, 0] as [number, number, number],
         color: 0xfdbcb4
       },
 
       // CHEST MUSCLES
       pectoralisMajorUpper: {
         geometry: new THREE.BoxGeometry(0.6, 0.3, 0.2),
-        position: [0, 1.0, 0.15],
+        position: [0, 1.0, 0.15] as [number, number, number],
         color: 0x22c55e,
         muscleName: 'Pectoralis Major',
         muscleHead: 'Upper (Clavicular Head)'
       },
       pectoralisMajorMiddle: {
         geometry: new THREE.BoxGeometry(0.7, 0.4, 0.25),
-        position: [0, 0.6, 0.15],
+        position: [0, 0.6, 0.15] as [number, number, number],
         color: 0x22c55e,
         muscleName: 'Pectoralis Major',
         muscleHead: 'Middle (Sternal Head)'
       },
       pectoralisMajorLower: {
         geometry: new THREE.BoxGeometry(0.6, 0.3, 0.2),
-        position: [0, 0.2, 0.15],
+        position: [0, 0.2, 0.15] as [number, number, number],
         color: 0x22c55e,
         muscleName: 'Pectoralis Major',
         muscleHead: 'Lower (Costal Head)'
@@ -101,64 +101,64 @@ export default function HumanBody3D({ selectedMuscleGroup, selectedMuscleSelecti
       // BACK MUSCLES
       latissimusDorsiLeft: {
         geometry: new THREE.BoxGeometry(0.3, 0.8, 0.15),
-        position: [-0.25, 0.4, -0.25],
+        position: [-0.25, 0.4, -0.25] as [number, number, number],
         color: 0x3b82f6,
         muscleName: 'Latissimus Dorsi'
       },
       latissimusDorsiRight: {
         geometry: new THREE.BoxGeometry(0.3, 0.8, 0.15),
-        position: [0.25, 0.4, -0.25],
+        position: [0.25, 0.4, -0.25] as [number, number, number],
         color: 0x3b82f6,
         muscleName: 'Latissimus Dorsi'
       },
       trapeziusUpper: {
         geometry: new THREE.BoxGeometry(0.8, 0.3, 0.1),
-        position: [0, 1.1, -0.3],
+        position: [0, 1.1, -0.3] as [number, number, number],
         color: 0x3b82f6,
         muscleName: 'Trapezius',
         muscleHead: 'Upper'
       },
       trapeziusMiddle: {
         geometry: new THREE.BoxGeometry(0.6, 0.3, 0.1),
-        position: [0, 0.7, -0.3],
+        position: [0, 0.7, -0.3] as [number, number, number],
         color: 0x3b82f6,
         muscleName: 'Trapezius',
         muscleHead: 'Middle'
       },
       trapeziusLower: {
         geometry: new THREE.BoxGeometry(0.4, 0.3, 0.1),
-        position: [0, 0.3, -0.3],
+        position: [0, 0.3, -0.3] as [number, number, number],
         color: 0x3b82f6,
         muscleName: 'Trapezius',
         muscleHead: 'Lower'
       },
       rhomboidsLeft: {
         geometry: new THREE.BoxGeometry(0.15, 0.4, 0.08),
-        position: [-0.15, 0.6, -0.25],
+        position: [-0.15, 0.6, -0.25] as [number, number, number],
         color: 0x3b82f6,
         muscleName: 'Rhomboids'
       },
       rhomboidsRight: {
         geometry: new THREE.BoxGeometry(0.15, 0.4, 0.08),
-        position: [0.15, 0.6, -0.25],
+        position: [0.15, 0.6, -0.25] as [number, number, number],
         color: 0x3b82f6,
         muscleName: 'Rhomboids'
       },
       teresMajorLeft: {
         geometry: new THREE.BoxGeometry(0.1, 0.2, 0.1),
-        position: [-0.35, 0.8, -0.15],
+        position: [-0.35, 0.8, -0.15] as [number, number, number],
         color: 0x3b82f6,
         muscleName: 'Teres Major'
       },
       teresMajorRight: {
         geometry: new THREE.BoxGeometry(0.1, 0.2, 0.1),
-        position: [0.35, 0.8, -0.15],
+        position: [0.35, 0.8, -0.15] as [number, number, number],
         color: 0x3b82f6,
         muscleName: 'Teres Major'
       },
       erectorSpinae: {
         geometry: new THREE.BoxGeometry(0.2, 1.0, 0.1),
-        position: [0, 0.0, -0.3],
+        position: [0, 0.0, -0.3] as [number, number, number],
         color: 0x3b82f6,
         muscleName: 'Erector Spinae (Lower Back)'
       },
@@ -166,42 +166,42 @@ export default function HumanBody3D({ selectedMuscleGroup, selectedMuscleSelecti
       // SHOULDER MUSCLES
       deltoidAnteriorLeft: {
         geometry: new THREE.SphereGeometry(0.12, 12, 12),
-        position: [-0.45, 1.1, 0.1],
+        position: [-0.45, 1.1, 0.1] as [number, number, number],
         color: 0xeab308,
         muscleName: 'Deltoids',
         muscleHead: 'Anterior Deltoid (Front)'
       },
       deltoidAnteriorRight: {
         geometry: new THREE.SphereGeometry(0.12, 12, 12),
-        position: [0.45, 1.1, 0.1],
+        position: [0.45, 1.1, 0.1] as [number, number, number],
         color: 0xeab308,
         muscleName: 'Deltoids',
         muscleHead: 'Anterior Deltoid (Front)'
       },
       deltoidLateralLeft: {
         geometry: new THREE.SphereGeometry(0.12, 12, 12),
-        position: [-0.5, 1.1, 0],
+        position: [-0.5, 1.1, 0] as [number, number, number],
         color: 0xeab308,
         muscleName: 'Deltoids',
         muscleHead: 'Lateral Deltoid (Side)'
       },
       deltoidLateralRight: {
         geometry: new THREE.SphereGeometry(0.12, 12, 12),
-        position: [0.5, 1.1, 0],
+        position: [0.5, 1.1, 0] as [number, number, number],
         color: 0xeab308,
         muscleName: 'Deltoids',
         muscleHead: 'Lateral Deltoid (Side)'
       },
       deltoidPosteriorLeft: {
         geometry: new THREE.SphereGeometry(0.12, 12, 12),
-        position: [-0.45, 1.1, -0.1],
+        position: [-0.45, 1.1, -0.1] as [number, number, number],
         color: 0xeab308,
         muscleName: 'Deltoids',
         muscleHead: 'Posterior Deltoid (Rear)'
       },
       deltoidPosteriorRight: {
         geometry: new THREE.SphereGeometry(0.12, 12, 12),
-        position: [0.45, 1.1, -0.1],
+        position: [0.45, 1.1, -0.1] as [number, number, number],
         color: 0xeab308,
         muscleName: 'Deltoids',
         muscleHead: 'Posterior Deltoid (Rear)'
@@ -211,53 +211,53 @@ export default function HumanBody3D({ selectedMuscleGroup, selectedMuscleSelecti
       // Biceps
       bicepsBrachiiLongLeft: {
         geometry: new THREE.CylinderGeometry(0.08, 0.1, 0.4, 8),
-        position: [-0.45, 0.8, 0.05],
+        position: [-0.45, 0.8, 0.05] as [number, number, number],
         color: 0xef4444,
         muscleName: 'Biceps Brachii',
         muscleHead: 'Long Head'
       },
       bicepsBrachiiLongRight: {
         geometry: new THREE.CylinderGeometry(0.08, 0.1, 0.4, 8),
-        position: [0.45, 0.8, 0.05],
+        position: [0.45, 0.8, 0.05] as [number, number, number],
         color: 0xef4444,
         muscleName: 'Biceps Brachii',
         muscleHead: 'Long Head'
       },
       bicepsBrachiiShortLeft: {
         geometry: new THREE.CylinderGeometry(0.08, 0.1, 0.4, 8),
-        position: [-0.5, 0.8, 0],
+        position: [-0.5, 0.8, 0] as [number, number, number],
         color: 0xef4444,
         muscleName: 'Biceps Brachii',
         muscleHead: 'Short Head'
       },
       bicepsBrachiiShortRight: {
         geometry: new THREE.CylinderGeometry(0.08, 0.1, 0.4, 8),
-        position: [0.5, 0.8, 0],
+        position: [0.5, 0.8, 0] as [number, number, number],
         color: 0xef4444,
         muscleName: 'Biceps Brachii',
         muscleHead: 'Short Head'
       },
       brachialisLeft: {
         geometry: new THREE.CylinderGeometry(0.06, 0.08, 0.3, 8),
-        position: [-0.48, 0.5, 0],
+        position: [-0.48, 0.5, 0] as [number, number, number],
         color: 0xef4444,
         muscleName: 'Brachialis'
       },
       brachialisRight: {
         geometry: new THREE.CylinderGeometry(0.06, 0.08, 0.3, 8),
-        position: [0.48, 0.5, 0],
+        position: [0.48, 0.5, 0] as [number, number, number],
         color: 0xef4444,
         muscleName: 'Brachialis'
       },
       brachioradialisLeft: {
         geometry: new THREE.CylinderGeometry(0.05, 0.07, 0.4, 8),
-        position: [-0.5, 0.2, 0],
+        position: [-0.5, 0.2, 0] as [number, number, number],
         color: 0xef4444,
         muscleName: 'Brachioradialis'
       },
       brachioradialisRight: {
         geometry: new THREE.CylinderGeometry(0.05, 0.07, 0.4, 8),
-        position: [0.5, 0.2, 0],
+        position: [0.5, 0.2, 0] as [number, number, number],
         color: 0xef4444,
         muscleName: 'Brachioradialis'
       },
@@ -265,42 +265,42 @@ export default function HumanBody3D({ selectedMuscleGroup, selectedMuscleSelecti
       // Triceps
       tricepsLongLeft: {
         geometry: new THREE.CylinderGeometry(0.08, 0.1, 0.5, 8),
-        position: [-0.5, 0.8, -0.05],
+        position: [-0.5, 0.8, -0.05] as [number, number, number],
         color: 0xef4444,
         muscleName: 'Triceps',
         muscleHead: 'Long Head'
       },
       tricepsLongRight: {
         geometry: new THREE.CylinderGeometry(0.08, 0.1, 0.5, 8),
-        position: [0.5, 0.8, -0.05],
+        position: [0.5, 0.8, -0.05] as [number, number, number],
         color: 0xef4444,
         muscleName: 'Triceps',
         muscleHead: 'Long Head'
       },
       tricepsLateralLeft: {
         geometry: new THREE.CylinderGeometry(0.07, 0.09, 0.4, 8),
-        position: [-0.52, 0.7, 0],
+        position: [-0.52, 0.7, 0] as [number, number, number],
         color: 0xef4444,
         muscleName: 'Triceps',
         muscleHead: 'Lateral Head'
       },
       tricepsLateralRight: {
         geometry: new THREE.CylinderGeometry(0.07, 0.09, 0.4, 8),
-        position: [0.52, 0.7, 0],
+        position: [0.52, 0.7, 0] as [number, number, number],
         color: 0xef4444,
         muscleName: 'Triceps',
         muscleHead: 'Lateral Head'
       },
       tricepsMedialLeft: {
         geometry: new THREE.CylinderGeometry(0.06, 0.08, 0.3, 8),
-        position: [-0.48, 0.6, -0.05],
+        position: [-0.48, 0.6, -0.05] as [number, number, number],
         color: 0xef4444,
         muscleName: 'Triceps',
         muscleHead: 'Medial Head'
       },
       tricepsMedialRight: {
         geometry: new THREE.CylinderGeometry(0.06, 0.08, 0.3, 8),
-        position: [0.48, 0.6, -0.05],
+        position: [0.48, 0.6, -0.05] as [number, number, number],
         color: 0xef4444,
         muscleName: 'Triceps',
         muscleHead: 'Medial Head'
@@ -309,25 +309,25 @@ export default function HumanBody3D({ selectedMuscleGroup, selectedMuscleSelecti
       // Forearms
       wristFlexorsLeft: {
         geometry: new THREE.CylinderGeometry(0.04, 0.06, 0.3, 8),
-        position: [-0.5, 0.0, 0.05],
+        position: [-0.5, 0.0, 0.05] as [number, number, number],
         color: 0xef4444,
         muscleName: 'Wrist Flexors'
       },
       wristFlexorsRight: {
         geometry: new THREE.CylinderGeometry(0.04, 0.06, 0.3, 8),
-        position: [0.5, 0.0, 0.05],
+        position: [0.5, 0.0, 0.05] as [number, number, number],
         color: 0xef4444,
         muscleName: 'Wrist Flexors'
       },
       wristExtensorsLeft: {
         geometry: new THREE.CylinderGeometry(0.04, 0.06, 0.3, 8),
-        position: [-0.5, 0.0, -0.05],
+        position: [-0.5, 0.0, -0.05] as [number, number, number],
         color: 0xef4444,
         muscleName: 'Wrist Extensors'
       },
       wristExtensorsRight: {
         geometry: new THREE.CylinderGeometry(0.04, 0.06, 0.3, 8),
-        position: [0.5, 0.0, -0.05],
+        position: [0.5, 0.0, -0.05] as [number, number, number],
         color: 0xef4444,
         muscleName: 'Wrist Extensors'
       },
@@ -335,25 +335,25 @@ export default function HumanBody3D({ selectedMuscleGroup, selectedMuscleSelecti
       // CORE MUSCLES
       rectusAbdominis: {
         geometry: new THREE.BoxGeometry(0.4, 0.8, 0.15),
-        position: [0, -0.1, 0.15],
+        position: [0, -0.1, 0.15] as [number, number, number],
         color: 0xa855f7,
         muscleName: 'Rectus Abdominis'
       },
       obliquesLeft: {
         geometry: new THREE.BoxGeometry(0.2, 0.6, 0.1),
-        position: [-0.3, -0.1, 0.1],
+        position: [-0.3, -0.1, 0.1] as [number, number, number],
         color: 0xa855f7,
         muscleName: 'Obliques (Internal & External)'
       },
       obliquesRight: {
         geometry: new THREE.BoxGeometry(0.2, 0.6, 0.1),
-        position: [0.3, -0.1, 0.1],
+        position: [0.3, -0.1, 0.1] as [number, number, number],
         color: 0xa855f7,
         muscleName: 'Obliques (Internal & External)'
       },
       transverseAbdominis: {
         geometry: new THREE.BoxGeometry(0.5, 0.4, 0.1),
-        position: [0, -0.3, 0.05],
+        position: [0, -0.3, 0.05] as [number, number, number],
         color: 0xa855f7,
         muscleName: 'Transverse Abdominis'
       },
@@ -362,49 +362,49 @@ export default function HumanBody3D({ selectedMuscleGroup, selectedMuscleSelecti
       // Quadriceps
       rectusFemorisLeft: {
         geometry: new THREE.CylinderGeometry(0.08, 0.1, 0.6, 8),
-        position: [-0.15, -0.9, 0.1],
+        position: [-0.15, -0.9, 0.1] as [number, number, number],
         color: 0xf97316,
         muscleName: 'Rectus Femoris'
       },
       rectusFemorisRight: {
         geometry: new THREE.CylinderGeometry(0.08, 0.1, 0.6, 8),
-        position: [0.15, -0.9, 0.1],
+        position: [0.15, -0.9, 0.1] as [number, number, number],
         color: 0xf97316,
         muscleName: 'Rectus Femoris'
       },
       vastusLateralisLeft: {
         geometry: new THREE.CylinderGeometry(0.09, 0.11, 0.7, 8),
-        position: [-0.25, -0.9, 0],
+        position: [-0.25, -0.9, 0] as [number, number, number],
         color: 0xf97316,
         muscleName: 'Vastus Lateralis'
       },
       vastusLateralisRight: {
         geometry: new THREE.CylinderGeometry(0.09, 0.11, 0.7, 8),
-        position: [0.25, -0.9, 0],
+        position: [0.25, -0.9, 0] as [number, number, number],
         color: 0xf97316,
         muscleName: 'Vastus Lateralis'
       },
       vastusMedialisLeft: {
         geometry: new THREE.CylinderGeometry(0.08, 0.1, 0.6, 8),
-        position: [-0.1, -0.9, 0],
+        position: [-0.1, -0.9, 0] as [number, number, number],
         color: 0xf97316,
         muscleName: 'Vastus Medialis'
       },
       vastusMedialisRight: {
         geometry: new THREE.CylinderGeometry(0.08, 0.1, 0.6, 8),
-        position: [0.1, -0.9, 0],
+        position: [0.1, -0.9, 0] as [number, number, number],
         color: 0xf97316,
         muscleName: 'Vastus Medialis'
       },
       vastusIntermediusLeft: {
         geometry: new THREE.CylinderGeometry(0.07, 0.09, 0.5, 8),
-        position: [-0.15, -0.9, -0.05],
+        position: [-0.15, -0.9, -0.05] as [number, number, number],
         color: 0xf97316,
         muscleName: 'Vastus Intermedius'
       },
       vastusIntermediusRight: {
         geometry: new THREE.CylinderGeometry(0.07, 0.09, 0.5, 8),
-        position: [0.15, -0.9, -0.05],
+        position: [0.15, -0.9, -0.05] as [number, number, number],
         color: 0xf97316,
         muscleName: 'Vastus Intermedius'
       },
@@ -412,37 +412,37 @@ export default function HumanBody3D({ selectedMuscleGroup, selectedMuscleSelecti
       // Hamstrings
       bicepsFemorisLeft: {
         geometry: new THREE.CylinderGeometry(0.08, 0.1, 0.6, 8),
-        position: [-0.2, -0.9, -0.1],
+        position: [-0.2, -0.9, -0.1] as [number, number, number],
         color: 0xf97316,
         muscleName: 'Biceps Femoris'
       },
       bicepsFemorisRight: {
         geometry: new THREE.CylinderGeometry(0.08, 0.1, 0.6, 8),
-        position: [0.2, -0.9, -0.1],
+        position: [0.2, -0.9, -0.1] as [number, number, number],
         color: 0xf97316,
         muscleName: 'Biceps Femoris'
       },
       semitendinosusLeft: {
         geometry: new THREE.CylinderGeometry(0.07, 0.09, 0.6, 8),
-        position: [-0.15, -0.9, -0.15],
+        position: [-0.15, -0.9, -0.15] as [number, number, number],
         color: 0xf97316,
         muscleName: 'Semitendinosus'
       },
       semitendinosusRight: {
         geometry: new THREE.CylinderGeometry(0.07, 0.09, 0.6, 8),
-        position: [0.15, -0.9, -0.15],
+        position: [0.15, -0.9, -0.15] as [number, number, number],
         color: 0xf97316,
         muscleName: 'Semitendinosus'
       },
       semimembranosusLeft: {
         geometry: new THREE.CylinderGeometry(0.07, 0.09, 0.6, 8),
-        position: [-0.1, -0.9, -0.15],
+        position: [-0.1, -0.9, -0.15] as [number, number, number],
         color: 0xf97316,
         muscleName: 'Semimembranosus'
       },
       semimembranosusRight: {
         geometry: new THREE.CylinderGeometry(0.07, 0.09, 0.6, 8),
-        position: [0.1, -0.9, -0.15],
+        position: [0.1, -0.9, -0.15] as [number, number, number],
         color: 0xf97316,
         muscleName: 'Semimembranosus'
       },
@@ -450,37 +450,37 @@ export default function HumanBody3D({ selectedMuscleGroup, selectedMuscleSelecti
       // Glutes
       gluteusMaximusLeft: {
         geometry: new THREE.BoxGeometry(0.25, 0.3, 0.2),
-        position: [-0.15, -0.5, -0.2],
+        position: [-0.15, -0.5, -0.2] as [number, number, number],
         color: 0xf97316,
         muscleName: 'Gluteus Maximus'
       },
       gluteusMaximusRight: {
         geometry: new THREE.BoxGeometry(0.25, 0.3, 0.2),
-        position: [0.15, -0.5, -0.2],
+        position: [0.15, -0.5, -0.2] as [number, number, number],
         color: 0xf97316,
         muscleName: 'Gluteus Maximus'
       },
       gluteusMediusLeft: {
         geometry: new THREE.BoxGeometry(0.15, 0.2, 0.15),
-        position: [-0.2, -0.4, -0.15],
+        position: [-0.2, -0.4, -0.15] as [number, number, number],
         color: 0xf97316,
         muscleName: 'Gluteus Medius'
       },
       gluteusMediusRight: {
         geometry: new THREE.BoxGeometry(0.15, 0.2, 0.15),
-        position: [0.2, -0.4, -0.15],
+        position: [0.2, -0.4, -0.15] as [number, number, number],
         color: 0xf97316,
         muscleName: 'Gluteus Medius'
       },
       gluteusMinimusLeft: {
         geometry: new THREE.BoxGeometry(0.1, 0.15, 0.1),
-        position: [-0.22, -0.35, -0.1],
+        position: [-0.22, -0.35, -0.1] as [number, number, number],
         color: 0xf97316,
         muscleName: 'Gluteus Minimus'
       },
       gluteusMinimusRight: {
         geometry: new THREE.BoxGeometry(0.1, 0.15, 0.1),
-        position: [0.22, -0.35, -0.1],
+        position: [0.22, -0.35, -0.1] as [number, number, number],
         color: 0xf97316,
         muscleName: 'Gluteus Minimus'
       },
@@ -488,25 +488,25 @@ export default function HumanBody3D({ selectedMuscleGroup, selectedMuscleSelecti
       // Calves
       gastrocnemiusLeft: {
         geometry: new THREE.CylinderGeometry(0.08, 0.1, 0.5, 8),
-        position: [-0.2, -1.7, 0.05],
+        position: [-0.2, -1.7, 0.05] as [number, number, number],
         color: 0xf97316,
         muscleName: 'Gastrocnemius'
       },
       gastrocnemiusRight: {
         geometry: new THREE.CylinderGeometry(0.08, 0.1, 0.5, 8),
-        position: [0.2, -1.7, 0.05],
+        position: [0.2, -1.7, 0.05] as [number, number, number],
         color: 0xf97316,
         muscleName: 'Gastrocnemius'
       },
       soleusLeft: {
         geometry: new THREE.CylinderGeometry(0.07, 0.09, 0.4, 8),
-        position: [-0.2, -1.8, -0.05],
+        position: [-0.2, -1.8, -0.05] as [number, number, number],
         color: 0xf97316,
         muscleName: 'Soleus'
       },
       soleusRight: {
         geometry: new THREE.CylinderGeometry(0.07, 0.09, 0.4, 8),
-        position: [0.2, -1.8, -0.05],
+        position: [0.2, -1.8, -0.05] as [number, number, number],
         color: 0xf97316,
         muscleName: 'Soleus'
       }
