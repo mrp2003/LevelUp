@@ -6,7 +6,14 @@ import HumanBody3D from '@/components/HumanBody3D';
 
 export default function MusclesPage() {
   const [selectedMuscleGroup, setSelectedMuscleGroup] = useState<string | null>(null);
-  const [selectedMuscleSelection, setSelectedMuscleSelection] = useState<any>(null);
+  const [selectedMuscleSelection, setSelectedMuscleSelection] = useState<{
+    group: string;
+    muscle: string;
+    subMuscle?: string;
+    head?: string;
+    displayName: string;
+    tags: any[];
+  } | null>(null);
 
   const allSelections = getAllMuscleSelections();
 
@@ -24,7 +31,7 @@ export default function MusclesPage() {
             Muscle Explorer
           </h1>
           <p className="text-zinc-400 text-lg max-w-2xl mx-auto">
-            Explore muscle groups and see how they're tagged in our system.
+            Explore muscle groups and see how they&apos;re tagged in our system.
             Select a muscle group to filter and highlight it on the 3D model.
           </p>
         </div>

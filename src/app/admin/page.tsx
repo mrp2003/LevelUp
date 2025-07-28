@@ -42,7 +42,7 @@ export default function AdminLogin() {
             } else {
                 setError(data.error || 'Invalid credentials');
             }
-        } catch (err) {
+        } catch {
             setError('Authentication failed. Please check your connection.');
         } finally {
             setLoading(false);

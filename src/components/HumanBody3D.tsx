@@ -5,7 +5,14 @@ import * as THREE from 'three';
 
 interface HumanBody3DProps {
   selectedMuscleGroup?: string | null;
-  selectedMuscleSelection?: any;
+  selectedMuscleSelection?: {
+    group: string;
+    muscle: string;
+    subMuscle?: string;
+    head?: string;
+    displayName: string;
+    tags: any[];
+  } | null;
 }
 
 export default function HumanBody3D({ selectedMuscleGroup, selectedMuscleSelection }: HumanBody3DProps) {
@@ -503,39 +510,33 @@ export default function HumanBody3D({ selectedMuscleGroup, selectedMuscleSelecti
 
     // Create meshes for each body part
     Object.entries(bodyParts).forEach(([name, part]) => {
-      const material = new THREE.MeshLambertMaterial({ 
+      const material = new THREE.MeshLambertMaterial({
         color: part.color,
         transparent: true,
         opacity: 0.8
       });
-      
+
       const mesh = new THREE.Mesh(part.geometry, material);
       mesh.position.set(...part.position);
       mesh.castShadow = true;
       mesh.receiveShadow = true;
-      mesh.userData = { 
-        muscleName: part.muscleName, 
+      mesh.userData = {
+        muscleName: part.muscleName,
         muscleHead: part.muscleHead,
-        name 
+        name
       };
-      
+
       bodyGroup.add(mesh);
     });
 
     scene.add(bodyGroup);
 
     // Mouse interaction
-    let mouseX = 0;
-    let mouseY = 0;
     let isMouseDown = false;
 
     const handleMouseMove = (event: MouseEvent) => {
       if (!mountRef.current) return;
-      
-      const rect = mountRef.current.getBoundingClientRect();
-      mouseX = ((event.clientX - rect.left) / rect.width) * 2 - 1;
-      mouseY = -((event.clientY - rect.top) / rect.height) * 2 + 1;
-      
+
       if (isMouseDown) {
         bodyGroup.rotation.y += (event.movementX * 0.01);
         bodyGroup.rotation.x += (event.movementY * 0.01);
@@ -558,12 +559,12 @@ export default function HumanBody3D({ selectedMuscleGroup, selectedMuscleSelecti
     // Animation loop
     const animate = () => {
       animationIdRef.current = requestAnimationFrame(animate);
-      
+
       // Auto-rotate when not interacting
       if (!isMouseDown) {
         bodyGroup.rotation.y += 0.005;
       }
-      
+
       renderer.render(scene, camera);
     };
 
@@ -572,7 +573,7 @@ export default function HumanBody3D({ selectedMuscleGroup, selectedMuscleSelecti
     // Handle resize
     const handleResize = () => {
       if (!mountRef.current || !camera || !renderer) return;
-      
+
       camera.aspect = mountRef.current.clientWidth / mountRef.current.clientHeight;
       camera.updateProjectionMatrix();
       renderer.setSize(mountRef.current.clientWidth, mountRef.current.clientHeight);
@@ -585,11 +586,12 @@ export default function HumanBody3D({ selectedMuscleGroup, selectedMuscleSelecti
       if (animationIdRef.current) {
         cancelAnimationFrame(animationIdRef.current);
       }
-      
-      if (mountRef.current && renderer.domElement) {
-        mountRef.current.removeChild(renderer.domElement);
+
+      const currentMount = mountRef.current;
+      if (currentMount && renderer.domElement) {
+        currentMount.removeChild(renderer.domElement);
       }
-      
+
       window.removeEventListener('resize', handleResize);
       renderer.dispose();
     };
@@ -637,7 +639,7 @@ export default function HumanBody3D({ selectedMuscleGroup, selectedMuscleSelecti
         const muscleName = child.userData.muscleName;
         const muscleHead = child.userData.muscleHead;
         const muscleGroup = muscleToGroup[muscleName];
-        
+
         // Skip non-muscle parts (like head)
         if (!muscleName) {
           child.material.opacity = 0.8;
@@ -653,7 +655,7 @@ export default function HumanBody3D({ selectedMuscleGroup, selectedMuscleSelecti
           const selectedMuscleName = selectedMuscleSelection.muscle;
           const selectedSubMuscle = selectedMuscleSelection.subMuscle;
           const selectedHead = selectedMuscleSelection.head;
-          
+
           // Match based on the most specific level available
           if (selectedHead && muscleHead) {
             // Match specific head
@@ -697,8 +699,8 @@ export default function HumanBody3D({ selectedMuscleGroup, selectedMuscleSelecti
   }, [selectedMuscleGroup, selectedMuscleSelection]);
 
   return (
-    <div 
-      ref={mountRef} 
+    <div
+      ref={mountRef}
       className="w-full h-full cursor-grab active:cursor-grabbing"
       style={{ minHeight: '500px' }}
     />

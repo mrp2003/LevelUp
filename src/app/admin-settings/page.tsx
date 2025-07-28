@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { Settings, Plus, Edit, Trash2, Dumbbell, Clock, Target, Save, X, LogOut } from 'lucide-react';
+import { Plus, Edit, Trash2, Dumbbell, Clock, Target, Save, X, LogOut } from 'lucide-react';
 
 interface Machine {
   id: string;

@@ -1,4 +1,4 @@
-import { ChevronLeft, ChevronRight, Plus, CheckCircle, Clock, Zap } from 'lucide-react';
+import { ChevronLeft, ChevronRight, CheckCircle, Clock, Zap } from 'lucide-react';
 
 export default function CalendarPage() {
   const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];

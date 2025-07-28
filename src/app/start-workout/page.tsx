@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Play, Pause, SkipForward, SkipBack, CheckCircle, Clock, Target, Zap } from 'lucide-react';
 
 export default function StartWorkoutPage() {
@@ -9,14 +9,14 @@ export default function StartWorkoutPage() {
   const [timeLeft, setTimeLeft] = useState(45);
   const [isResting, setIsResting] = useState(false);
 
-  const exercises = [
+  const exercises = useMemo(() => [
     { name: 'Push-ups', duration: 45, reps: '12-15', difficulty: 'Medium' },
     { name: 'Squats', duration: 60, reps: '15-20', difficulty: 'Easy' },
     { name: 'Plank', duration: 30, reps: 'Hold', difficulty: 'Medium' },
     { name: 'Lunges', duration: 45, reps: '10 each leg', difficulty: 'Medium' },
     { name: 'Burpees', duration: 30, reps: '8-10', difficulty: 'Hard' },
     { name: 'Mountain Climbers', duration: 45, reps: '20-30', difficulty: 'Hard' },
-  ];
+  ], []);
 
   const currentEx = exercises[currentExercise];
 
