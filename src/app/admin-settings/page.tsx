@@ -61,9 +61,40 @@ export default function AdminSettingsPage() {
 
   // State for machines
   const [machines, setMachines] = useState<Machine[]>([
-    { id: '1', name: 'Bench Press', type: 'Strength', description: 'Adjustable bench with barbell rack' },
-    { id: '2', name: 'Treadmill', type: 'Cardio', description: 'Electric treadmill with incline' },
-    { id: '3', name: 'Lat Pulldown', type: 'Strength', description: 'Cable machine for back exercises' }
+    // Chest Machines
+    { id: '1', name: 'Incline Chest Press Machine', type: 'Chest', description: 'Incline chest press for upper chest development' },
+    { id: '2', name: 'Chest Press Machine', type: 'Chest', description: 'Standard chest press machine for chest development' },
+    { id: '3', name: 'Decline Chest Press Machine', type: 'Chest', description: 'Decline chest press for lower chest development' },
+    
+    // Back Machines
+    { id: '4', name: 'Lat Pulldown Machine', type: 'Back', description: 'Cable machine for lat pulldown exercises' },
+    { id: '5', name: 'Shrug Machine', type: 'Back', description: 'Machine for shoulder shrug exercises' },
+    { id: '6', name: 'Cable Row Machine', type: 'Back', description: 'Seated cable row machine for back development' },
+    { id: '7', name: 'Rear Delt Machine', type: 'Back', description: 'Machine for rear deltoid and upper back exercises' },
+    { id: '8', name: 'Hyperextension Bench', type: 'Back', description: 'Bench for lower back hyperextension exercises' },
+    
+    // Shoulder Machines
+    { id: '9', name: 'Lateral Raise Machine', type: 'Shoulders', description: 'Machine for lateral deltoid raises' },
+    
+    // Arm Machines
+    { id: '10', name: 'Preacher Curl Machine', type: 'Arms', description: 'Machine for isolated bicep curls' },
+    { id: '11', name: 'Smith Machine', type: 'Arms', description: 'Multi-purpose guided barbell machine' },
+    { id: '12', name: 'Wrist Curl Machine', type: 'Arms', description: 'Machine for forearm and wrist exercises' },
+    
+    // Core Machines
+    { id: '13', name: 'Ab Crunch Machine', type: 'Core', description: 'Machine for abdominal crunches' },
+    
+    // Leg Machines
+    { id: '14', name: 'Leg Press Machine', type: 'Legs', description: 'Machine for leg press exercises' },
+    { id: '15', name: 'Hack Squat Machine', type: 'Legs', description: 'Machine for hack squat exercises' },
+    { id: '16', name: 'Leg Extension Machine', type: 'Legs', description: 'Machine for quadriceps extensions' },
+    { id: '17', name: 'Leg Curl Machine', type: 'Legs', description: 'Machine for hamstring curls' },
+    { id: '18', name: 'Hip Thrust Machine', type: 'Legs', description: 'Machine for hip thrust and glute exercises' },
+    { id: '19', name: 'Standing Calf Raise Machine', type: 'Legs', description: 'Machine for standing calf raises' },
+    { id: '20', name: 'Seated Calf Raise Machine', type: 'Legs', description: 'Machine for seated calf raises' },
+    
+    // Multi-purpose Machines
+    { id: '21', name: 'Cable Machine', type: 'Multi-purpose', description: 'Versatile cable machine for various exercises' }
   ]);
 
   // State for exercises
@@ -93,6 +124,9 @@ export default function AdminSettingsPage() {
   const [showWorkoutForm, setShowWorkoutForm] = useState(false);
   const [activeTab, setActiveTab] = useState<'machines' | 'exercises' | 'workouts'>('machines');
 
+  // Edit states
+  const [editingMachine, setEditingMachine] = useState<Machine | null>(null);
+
   // Form data states
   const [machineForm, setMachineForm] = useState({ name: '', type: '', description: '' });
   const [exerciseForm, setExerciseForm] = useState({
@@ -121,14 +155,53 @@ export default function AdminSettingsPage() {
     return Math.round(totalTime);
   };
 
-  // Handle form submissions
+  // Machine CRUD functions
   const handleMachineSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const newMachine: Machine = {
-      id: Date.now().toString(),
-      ...machineForm
-    };
-    setMachines([...machines, newMachine]);
+    if (editingMachine) {
+      // Update existing machine
+      setMachines(machines.map(machine => 
+        machine.id === editingMachine.id 
+          ? { ...editingMachine, ...machineForm }
+          : machine
+      ));
+      setEditingMachine(null);
+    } else {
+      // Add new machine
+      const newMachine: Machine = {
+        id: Date.now().toString(),
+        ...machineForm
+      };
+      setMachines([...machines, newMachine]);
+    }
+    setMachineForm({ name: '', type: '', description: '' });
+    setShowMachineForm(false);
+  };
+
+  const handleEditMachine = (machine: Machine) => {
+    setEditingMachine(machine);
+    setMachineForm({
+      name: machine.name,
+      type: machine.type,
+      description: machine.description
+    });
+    setShowMachineForm(true);
+  };
+
+  const handleDeleteMachine = (machineId: string) => {
+    if (confirm('Are you sure you want to delete this machine? This action cannot be undone.')) {
+      setMachines(machines.filter(machine => machine.id !== machineId));
+      // Also remove machine references from exercises
+      setExercises(exercises.map(exercise => 
+        exercise.machineId === machineId 
+          ? { ...exercise, type: 'bodyweight' as const, machineId: undefined }
+          : exercise
+      ));
+    }
+  };
+
+  const handleCancelMachineEdit = () => {
+    setEditingMachine(null);
     setMachineForm({ name: '', type: '', description: '' });
     setShowMachineForm(false);
   };
@@ -246,36 +319,70 @@ export default function AdminSettingsPage() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {machines.map((machine) => (
-                <div key={machine.id} className="bg-zinc-800/50 p-4 rounded-xl border border-zinc-700/50">
-                  <div className="flex items-start justify-between mb-3">
-                    <div>
-                      <h3 className="font-semibold text-white">{machine.name}</h3>
-                      <span className="text-xs theme-text bg-zinc-700/50 px-2 py-1 rounded-lg">
-                        {machine.type}
-                      </span>
+              {machines.map((machine) => {
+                // Define colors for different machine types
+                const getTypeColor = (type: string) => {
+                  switch (type) {
+                    case 'Chest':
+                      return 'bg-red-500/20 text-red-400 border-red-500/30';
+                    case 'Back':
+                      return 'bg-blue-500/20 text-blue-400 border-blue-500/30';
+                    case 'Shoulders':
+                      return 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30';
+                    case 'Arms':
+                      return 'bg-purple-500/20 text-purple-400 border-purple-500/30';
+                    case 'Core':
+                      return 'bg-green-500/20 text-green-400 border-green-500/30';
+                    case 'Legs':
+                      return 'bg-orange-500/20 text-orange-400 border-orange-500/30';
+                    case 'Multi-purpose':
+                      return 'bg-cyan-500/20 text-cyan-400 border-cyan-500/30';
+                    default:
+                      return 'bg-zinc-700/50 text-zinc-300 border-zinc-600/50';
+                  }
+                };
+
+                return (
+                  <div key={machine.id} className="bg-zinc-800/50 p-4 rounded-xl border border-zinc-700/50">
+                    <div className="flex items-start justify-between mb-3">
+                      <div>
+                        <h3 className="font-semibold text-white">{machine.name}</h3>
+                        <span className={`text-xs px-2 py-1 rounded-lg border ${getTypeColor(machine.type)}`}>
+                          {machine.type}
+                        </span>
+                      </div>
+                      <div className="flex space-x-1">
+                        <button 
+                          onClick={() => handleEditMachine(machine)}
+                          className="p-1 hover:bg-zinc-700 rounded transition-colors"
+                          title="Edit machine"
+                        >
+                          <Edit className="h-3 w-3 text-zinc-400" />
+                        </button>
+                        <button 
+                          onClick={() => handleDeleteMachine(machine.id)}
+                          className="p-1 hover:bg-zinc-700 rounded transition-colors"
+                          title="Delete machine"
+                        >
+                          <Trash2 className="h-3 w-3 text-zinc-400" />
+                        </button>
+                      </div>
                     </div>
-                    <div className="flex space-x-1">
-                      <button className="p-1 hover:bg-zinc-700 rounded transition-colors">
-                        <Edit className="h-3 w-3 text-zinc-400" />
-                      </button>
-                      <button className="p-1 hover:bg-zinc-700 rounded transition-colors">
-                        <Trash2 className="h-3 w-3 text-zinc-400" />
-                      </button>
-                    </div>
+                    <p className="text-sm text-zinc-400">{machine.description}</p>
                   </div>
-                  <p className="text-sm text-zinc-400">{machine.description}</p>
-                </div>
-              ))}
+                );
+              })}
             </div>
 
-            {/* Add Machine Form */}
+            {/* Add/Edit Machine Form */}
             {showMachineForm && (
               <div className="theme-gradient-transparent p-6 rounded-2xl border theme-border">
                 <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-lg font-semibold text-white">Add New Machine</h3>
+                  <h3 className="text-lg font-semibold text-white">
+                    {editingMachine ? 'Edit Machine' : 'Add New Machine'}
+                  </h3>
                   <button
-                    onClick={() => setShowMachineForm(false)}
+                    onClick={handleCancelMachineEdit}
                     className="text-zinc-400 hover:text-white transition-colors"
                   >
                     <X className="h-5 w-5" />
@@ -292,14 +399,22 @@ export default function AdminSettingsPage() {
                       className="bg-zinc-700 border border-zinc-600 rounded-xl px-4 py-3 text-white placeholder-zinc-400 focus:outline-none focus:ring-2 theme-focus"
                       required
                     />
-                    <input
-                      type="text"
-                      placeholder="Type (e.g., Strength, Cardio)"
+                    <select
                       value={machineForm.type}
                       onChange={(e) => setMachineForm({ ...machineForm, type: e.target.value })}
-                      className="bg-zinc-700 border border-zinc-600 rounded-xl px-4 py-3 text-white placeholder-zinc-400 focus:outline-none focus:ring-2 theme-focus"
+                      className="bg-zinc-700 border border-zinc-600 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 theme-focus"
                       required
-                    />
+                    >
+                      <option value="">Select Type</option>
+                      <option value="Chest">Chest</option>
+                      <option value="Back">Back</option>
+                      <option value="Shoulders">Shoulders</option>
+                      <option value="Arms">Arms</option>
+                      <option value="Core">Core</option>
+                      <option value="Legs">Legs</option>
+                      <option value="Multi-purpose">Multi-purpose</option>
+                      <option value="Cardio">Cardio</option>
+                    </select>
                   </div>
                   <textarea
                     placeholder="Description"
@@ -307,13 +422,27 @@ export default function AdminSettingsPage() {
                     onChange={(e) => setMachineForm({ ...machineForm, description: e.target.value })}
                     className="w-full bg-zinc-700 border border-zinc-600 rounded-xl px-4 py-3 text-white placeholder-zinc-400 focus:outline-none focus:ring-2 theme-focus resize-none"
                     rows={3}
+                    required
                   />
-                  <button
-                    type="submit"
-                    className="theme-gradient text-white px-6 py-2 rounded-xl hover:opacity-90 transition-all duration-200"
-                  >
-                    Add Machine
-                  </button>
+                  <div className="flex space-x-3">
+                    <button
+                      type="submit"
+                      className="theme-gradient text-white px-6 py-2 rounded-xl hover:opacity-90 transition-all duration-200 flex items-center space-x-2"
+                    >
+                      <Save className="h-4 w-4" />
+                      <span>{editingMachine ? 'Update Machine' : 'Add Machine'}</span>
+                    </button>
+                    {editingMachine && (
+                      <button
+                        type="button"
+                        onClick={handleCancelMachineEdit}
+                        className="bg-zinc-600 hover:bg-zinc-500 text-white px-6 py-2 rounded-xl transition-all duration-200 flex items-center space-x-2"
+                      >
+                        <X className="h-4 w-4" />
+                        <span>Cancel</span>
+                      </button>
+                    )}
+                  </div>
                 </form>
               </div>
             )}
