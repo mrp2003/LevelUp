@@ -72,7 +72,7 @@ export default function HumanBody3D({ selectedMuscleGroup, selectedMuscleSelecti
       color: number;
       muscleName?: string;
       muscleHead?: string;
-    }    
+    }
 
     // Detailed body parts mapping to actual muscles from muscleGroups.ts
     const bodyParts: Record<string, BodyPart> = {
